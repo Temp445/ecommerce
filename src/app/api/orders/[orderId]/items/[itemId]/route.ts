@@ -60,6 +60,10 @@ export async function PATCH(
       }
     }
 
+    if (body.orderStatus === "Delivered") {
+      item.deliveredAt = new Date();
+    }
+
     await order.save();
 
     return NextResponse.json(

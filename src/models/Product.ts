@@ -31,7 +31,7 @@ const ProductSchema = new mongoose.Schema(
     images: [{ type: String }],
 
     price: { type: Number, required: true },
-    discountPrice: { type: Number },
+    discountPrice: { type: Number, default: 0 },
 
     stock: { type: Number},
 
@@ -48,8 +48,8 @@ const ProductSchema = new mongoose.Schema(
     benefits: [BenefitSchema],
 
     deliveryCharge: { type: Number },
-    deliveryDate: { type: Number },
-
+    warranty: { type: String },
+    returnPolicy: { type: Boolean, default: false},
     isNewArrival: { type: Boolean, default: false },
     isActive: { type: Boolean, default: true },
   },

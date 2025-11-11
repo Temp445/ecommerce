@@ -1,10 +1,9 @@
 "use client";
-
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { Loader2, Search, LayoutGrid, List } from "lucide-react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation"; // ⬅️ add useSearchParams
 import { useAuth } from "@/context/AuthProvider";
 import FiltersSidebar from "@/Components/ProductPage/FiltersSidebar";
 import ProductCard from "@/Components/ProductPage/ProductCard";
@@ -21,10 +20,17 @@ export default function ProductsPage() {
 
   const { user } = useAuth();
   const router = useRouter();
+  const searchParams = useSearchParams(); // ⬅️
 
   useEffect(() => {
     fetchProducts();
   }, []);
+
+  // ✅ If URL has ?category=<id>, auto-select it
+  useEffect(() => {
+    const cat = searchParams.get("category");
+    if (cat) setSelectedCategories([cat]);
+  }, [searchParams]);
 
   useEffect(() => {
     applyFilters();
@@ -83,17 +89,18 @@ export default function ProductsPage() {
     setSelectedCategories([]);
     setPriceRange([0, 100000]);
     setSortBy("featured");
+    router.push("/products"); // reset query param
   };
 
   const categories = Array.from(
-  new Map(
-    products
-      .filter((p) => p.category?._id)
-      .map((p) => [p.category._id, p.category])
-  ).values()
-);
+    new Map(
+      products
+        .filter((p) => p.category?._id)
+        .map((p) => [p.category._id, p.category])
+    ).values()
+  );
 
-
+  // loader UI remains the same...
   if (loading) {
     return (
       <div className="flex flex-col justify-center items-center min-h-screen bg-gradient-to-br from-slate-50 to-slate-100">
@@ -121,7 +128,7 @@ export default function ProductsPage() {
 
           <main className="flex-1">
             <div className="flex flex-wrap items-center justify-between mb-6 bg-white border border-slate-200 rounded-xl p-4 shadow-sm">
-           <div className="text-xl font-medium"> Our Products</div>
+              <div className="text-xl font-medium">Our Products</div>
 
               <div className="flex items-center gap-2">
                 <button

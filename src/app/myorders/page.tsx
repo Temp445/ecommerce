@@ -80,12 +80,12 @@ export default function OrdersPage() {
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case "Pending":
       case "Processing":
         return "text-orange-600";
       case "Packed":
       case "Shipped":
         return "text-blue-600";
+      case "Out for Delivery":
       case "Delivered":
         return "text-green-600";
       case "Cancelled":
@@ -105,7 +105,6 @@ export default function OrdersPage() {
     );
   }
 
-  // Flatten all items from all orders into a single array
   const flattenedItems = orders.flatMap((order) =>
     order.items.map((item) => ({
       ...item,
@@ -144,7 +143,7 @@ export default function OrdersPage() {
             const statusColor = getStatusColor(item.orderStatus);
 
             return (
-              <div key={index} className="bg-white border rounded-lg shadow">
+              <div key={index} className="bg-white shadow">
                 <div className="bg-gray-700 text-gray-200 px-6 py-3 flex justify-between items-center">
                   <span className="text-xs">
                     Ordered on:{" "}
@@ -157,7 +156,6 @@ export default function OrdersPage() {
                   <span className="text-xs text-gray-400">Order #{item.orderId}</span>
                 </div>
 
-                {/* ✅ link to single product order detail */}
                 <Link
                   href={`/myorders/${item.orderId}/item/${item._id}`}
                   className="block hover:bg-gray-50 transition"
@@ -174,11 +172,11 @@ export default function OrdersPage() {
                         {item.productName}
                       </h3>
                       <p className="text-sm text-gray-600 mb-2">Qty: {item.quantity}</p>
-                      <p className="text-base font-semibold text-gray-800 font-sans">
-                        ₹
+                      <p className="text-sm  text-gray-800 font-sans">
+                       SubTotal ₹
                         {(
-                          (item.discountPriceAtPurchase || item.priceAtPurchase) *
-                          item.quantity
+                          ((item.discountPriceAtPurchase || item.priceAtPurchase) *
+                          item.quantity) + (item.deliveryCharge || 0)
                         ).toLocaleString()}
                       </p>
                     </div>

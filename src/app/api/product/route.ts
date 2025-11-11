@@ -6,10 +6,14 @@ import "@/models/Category";
 import Product from "@/models/Product";
 import { generatePathUrl } from "@/lib/pathUrl";
 
-export async function GET() {
+export async function GET(req: Request) {
   try {
     await dbConnect();
-    const products = await Product.find()
+    const { searchParams } = new URL(req.url);
+    const categoryId = searchParams.get("category");
+    const filter = categoryId ? { category: categoryId } : {};
+
+    const products = await Product.find(filter)
       .sort({ createdAt: -1 })
       .populate("category", "_id Name");
 
@@ -21,6 +25,7 @@ export async function GET() {
     );
   }
 }
+
 
 export async function POST(req: Request) {
   try {
@@ -36,8 +41,9 @@ export async function POST(req: Request) {
     const discountPrice = Number(formData.get("discountPrice")) || 0;
     const stock = Number(formData.get("stock"));
     const deliveryCharge = Number(formData.get("deliveryCharge")) || 0;
-    const deliveryDate = Number(formData.get("deliveryDate")) || 0;
     const isNewArrival = formData.get("isNewArrival") === "true";
+    const returnPolicy = formData.get("returnPolicy") === "true";
+    const warranty = formData.get("warranty") as string;
 
     const technicalDetailsRaw = formData.get("technicalDetails") as string;
     const benefitsRaw = formData.get("benefits") as string;
@@ -120,7 +126,6 @@ export async function POST(req: Request) {
       discountPrice,
       stock,
       deliveryCharge,
-      deliveryDate,
       category: new mongoose.Types.ObjectId(category),
       thumbnail: thumbnailUrl,
       images: imageUrls,
@@ -128,6 +133,8 @@ export async function POST(req: Request) {
       benefits,
       isNewArrival,
       isActive: true,
+      returnPolicy,
+      warranty,
     });
 
     return NextResponse.json({ success: true, data: product }, { status: 201 });

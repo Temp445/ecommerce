@@ -1,5 +1,6 @@
 import dbConnect from "@/lib/dbConnect";
 import cloudinary from "@/lib/cloudinary";
+import "@/models/Category";
 import Product from "@/models/Product";
 import { NextResponse } from "next/server";
 import mongoose from "mongoose";
@@ -61,10 +62,10 @@ export async function PUT(
     const deliveryCharge = formData.get("deliveryCharge")
       ? Number(formData.get("deliveryCharge"))
       : 0;
-    const deliveryDate = formData.get("deliveryDate")
-      ? Number(formData.get("deliveryDate"))
-      : 0;
+    
     const isNewArrival = formData.get("isNewArrival") === "true";
+    const returnPolicy = formData.get("returnPolicy") === "true";
+    const warranty = formData.get("warranty") as string;
 
     const technicalDetailsRaw = formData.get("technicalDetails") as string;
     const technicalDetails = technicalDetailsRaw
@@ -93,11 +94,13 @@ export async function PUT(
     if (discountPrice !== undefined) product.discountPrice = discountPrice;
     if (stock !== undefined) product.stock = stock;
     if (deliveryCharge !== undefined) product.deliveryCharge = deliveryCharge;
-    if (deliveryDate !== undefined) product.deliveryDate = deliveryDate;
     if (technicalDetails) product.technicalDetails = technicalDetails;
     if (benefits) product.benefits = benefits;
     if (formData.get("isNewArrival") !== null)
       product.isNewArrival = isNewArrival;
+    if (formData.get("returnPolicy") !== null)
+      product.returnPolicy = returnPolicy;
+    if (warranty) product.warranty = warranty;
 
     const thumbnailFile = formData.get("thumbnail") as File | null;
     if (thumbnailFile) {

@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import dbConnect from "@/lib/dbConnect";
+import "@/models/User";
 import Order from "@/models/Order";
 import Address from "@/models/Address";
 

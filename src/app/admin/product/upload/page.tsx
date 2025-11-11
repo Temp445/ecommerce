@@ -50,6 +50,8 @@ interface FormDataState {
   deliveryDate: string;
   isNewArrival: boolean;
   isActive: boolean;
+  warranty?: string;
+  returnPolicy?: boolean;
 }
 
 interface ErrorState {
@@ -72,6 +74,8 @@ const ProductUploadPage: React.FC = () => {
     deliveryDate: "",
     isNewArrival: false,
     isActive: true,
+    warranty: "",
+    returnPolicy: false,
   });
 
   const [technicalDetails, setTechnicalDetails] = useState<TechnicalDetails>({
@@ -125,6 +129,7 @@ const ProductUploadPage: React.FC = () => {
       parseFloat(formData.discountPrice) >= parseFloat(formData.price)
     )
       newErrors.discountPrice = "Discount price must be less than price";
+
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -316,8 +321,8 @@ const ProductUploadPage: React.FC = () => {
             </h2>
             <div className="grid grid-cols-3 gap-4">
               {[
-                { name: "price", label: "Price (₹)" },
-                { name: "discountPrice", label: "Discount Price (₹)" },
+                { name: "price", label: "Price" },
+                { name: "discountPrice", label: "Discount Price" },
                 { name: "stock", label: "Stock Quantity" },
               ].map((field) => (
                 <div key={field.name} className="space-y-2">
@@ -485,13 +490,11 @@ const ProductUploadPage: React.FC = () => {
 
           <section className=" p-4 rounded-xl space-y-4">
             <h2 className="flex items-center gap-2 text-xl font-semibold text-gray-900">
-              <Truck className="w-6 h-6" /> Delivery & Status
+              <Truck className="w-6 h-6" /> Delivery Charge 
             </h2>
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
-                <label className="font-medium text-gray-700">
-                  Delivery Charge 
-                </label>
+               
                 <input
                   type="number"
                   name="deliveryCharge"
@@ -501,21 +504,43 @@ const ProductUploadPage: React.FC = () => {
                   placeholder="Enter delivery charge"
                 />
               </div>
+             
+            </div>
+          </section>
+
+
+          <section className=" p-4 rounded-xl space-y-4">
+            <h2 className="flex items-center gap-2 text-xl font-semibold text-gray-900">
+              Return Policy & Warranty
+            </h2>
+            <div className="grid grid-cols-1 gap-4">
               <div className="space-y-2">
                 <label className="font-medium text-gray-700">
-                  Delivery Days
+                  Warranty Details (Optional)
                 </label>
                 <input
-                  type="number"
-                  name="deliveryDate"
-                  value={formData.deliveryDate}
+                  type="text"
+                  name="warranty"
+                  value={formData.warranty}
                   onChange={handleChange}
                   className="border border-gray-300 rounded-lg p-3 w-full no-spinner"
-                  placeholder="Enter delivery days"
+                  placeholder="Enter warranty details"
                 />
               </div>
-            </div>
 
+         <div className="grid grid-cols-3 gap-4">
+               <div className="flex gap-4 mt-3">
+              <label className="flex items-center gap-2 text-gray-700">
+                <input
+                  type="checkbox"
+                  name="returnPolicy"
+                  checked={formData.returnPolicy}
+                  onChange={handleChange}
+                />
+                Return Policy Available
+              </label>
+              
+            </div>
             <div className="flex gap-4 mt-3">
               <label className="flex items-center gap-2 text-gray-700">
                 <input
@@ -524,9 +549,11 @@ const ProductUploadPage: React.FC = () => {
                   checked={formData.isNewArrival}
                   onChange={handleChange}
                 />
-                New Arrival
+               Mark as New Arrival
               </label>
-              <label className="flex items-center gap-2 text-gray-700">
+              
+            </div>
+            <label className="flex items-center gap-2 text-gray-700">
                 <input
                   type="checkbox"
                   name="isActive"
@@ -535,7 +562,11 @@ const ProductUploadPage: React.FC = () => {
                 />
                 Active Product
               </label>
+         </div>
+              
             </div>
+
+            
           </section>
 
           <button

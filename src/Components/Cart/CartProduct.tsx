@@ -49,7 +49,6 @@ const CartProduct = () => {
   const [updatingId, setUpdatingId] = useState<string | null>(null);
   const [showOutOfStockModal, setShowOutOfStockModal] = useState(false);
   const [outOfStockItems, setOutOfStockItems] = useState<CartProductType[]>([]);
-const [savedForLater, setSavedForLater] = useState<CartProductType[]>([]);
 
   const { refreshCart } = useCart();
   const { user } = useAuth();
@@ -452,7 +451,7 @@ const [savedForLater, setSavedForLater] = useState<CartProductType[]>([]);
                             ₹{price.toLocaleString()}
                           </span>
                           {hasDiscount && (
-                            <span className="text-sm text-slate-400 line-through">
+                            <span className="text-sm text-slate-400 line-through font-sans">
                               ₹{product.price.toLocaleString()}
                             </span>
                           )}
@@ -566,75 +565,7 @@ const [savedForLater, setSavedForLater] = useState<CartProductType[]>([]);
               <span>Secure checkout</span>
             </div>
           </div>
-          {showOutOfStockModal && (
-            <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm px-4">
-              <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md p-6 relative animate-in fade-in zoom-in-95 duration-200">
-                <h3 className="text-lg sm:text-xl  text-gray-900 mb-2 flex items-center gap-2">
-                  <TriangleAlert className="fill-yellow-400" /> Some items are
-                  out of stock
-                </h3>
-                <p className="text-gray-600 text-sm mb-4">
-                  The following items are currently unavailable. Would you like
-                  to remove them and continue to checkout?
-                </p>
-
-                <div className="max-h-48 overflow-y-auto mb-5 space-y-3">
-                  {outOfStockItems.map((item) => {
-                    const product = item.productId || item.product;
-                    if (!product) return null;
-                    return (
-                      <div
-                        key={product._id}
-                        className="flex items-center gap-3 border border-gray-200 rounded-lg p-3 hover:bg-gray-50 transition"
-                      >
-                        <img
-                          src={
-                            product.thumbnail ||
-                            product.images?.[0] ||
-                            "/placeholder.png"
-                          }
-                          alt={product.name}
-                          className="w-14 h-14 object-contain rounded-md bg-gray-50"
-                        />
-                        <span className="font-medium text-gray-800 text-sm line-clamp-2">
-                          {product.name}
-                        </span>
-                      </div>
-                    );
-                  })}
-                </div>
-
-                <div className="flex justify-end gap-3 pt-2">
-                  <button
-                    onClick={() => setShowOutOfStockModal(false)}
-                    className="px-5 py-2.5 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-100 font-medium text-sm transition"
-                  >
-                    Cancel
-                  </button>
-                  <button
-                    onClick={async () => {
-                      try {
-                        for (const item of outOfStockItems) {
-                          const product = item.productId || item.product;
-                          if (!product) continue;
-                          await handleDelete(
-                            user?._id ? item._id : product._id
-                          );
-                        }
-                        setShowOutOfStockModal(false);
-                        router.push("/checkout");
-                      } catch {
-                        toast.error("Failed to remove out of stock items");
-                      }
-                    }}
-                    className="px-5 py-2.5 rounded-lg bg-gray-900 text-white hover:bg-gray-950 font-medium text-sm transition"
-                  >
-                    Yes, Continue
-                  </button>
-                </div>
-              </div>
-            </div>
-          )}
+          
         </div>
       </div>
     </div>

@@ -11,7 +11,8 @@ import {
   Truck,
   Shield,
   Award,
-  ChevronRight,
+  History,
+  MoveRight 
 } from "lucide-react";
 import toast from "react-hot-toast";
 import AddToCartButton from "@/Components/Button/AddToCartButton";
@@ -145,7 +146,7 @@ export default function ProductDetailPage() {
                   )}
                 </div>
                 {product.discountPrice > 0 && (
-                  <p className="text-xs text-neutral-800 uppercase tracking-wide">
+                  <p className="text-xs text-neutral-800 uppercase tracking-wide font-sans">
                     You save ₹{" "}
                     <span> {product.price - product.discountPrice} </span>
                   </p>
@@ -162,54 +163,55 @@ export default function ProductDetailPage() {
                       product.stock > 10 ? "text-neutral-900" : "text-red-600"
                     }`}
                   >
-                  {product.stock > 10
-                     ? "In Stock"
-                     : product.stock > 0
-                     ? `Only ${product.stock} left`
-                     : "Out of Stock"}
-
+                    {product.stock > 10
+                      ? "In Stock"
+                      : product.stock > 0
+                      ? `Only ${product.stock} left`
+                      : "Out of Stock"}
                   </div>
                 </div>
 
-                {product.deliveryDate > 0 ? (
-                  <div className="border border-neutral-200 rounded p-4">
-                    <div className="text-xs uppercase tracking-widest text-neutral-500 mb-2">
-                      Delivery
-                    </div>
-                    <div className="text-sm font-medium text-neutral-900">
-                        {(() => {
-                          const date = new Date();
-                          date.setDate(date.getDate() + (product.deliveryDate));
-                          return `Expected by ${date.toLocaleDateString("en-IN", {
-                            day: "2-digit",
-                            month: "short",
-                            year: "numeric",
-                          })}`;
-                        })()}
-                    </div>
+                <div className="border border-neutral-200 rounded p-4">
+                  <div className="text-xs uppercase tracking-widest text-neutral-500 mb-2">
+                    Delivery
                   </div>
-                ) : (
-                  <div className="border border-neutral-200 rounded p-4">
-                    <div className="text-xs uppercase tracking-widest text-neutral-500 mb-2">
-                      Delivery
-                    </div>
-                    <div className="text-sm font-medium text-neutral-900">
-                      10 Business Days
-                    </div>
+                  <div className="text-sm font-medium text-neutral-900">
+                    {(() => {
+                      const date = new Date();
+                      date.setDate(date.getDate() + 7);
+                      return `Expected by ${date.toLocaleDateString("en-IN", {
+                        day: "2-digit",
+                        month: "short",
+                        year: "numeric",
+                      })}`;
+                    })()}
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex flex-wrap gap-5">
+                {product.deliveryCharge !== undefined && (
+                  <div className="mb-8 text-sm text-neutral-800 flex items-center gap-2 font-sans">
+                    <Truck size={16} />
+                    <span>
+                      {product.deliveryCharge === 0
+                        ? "Free Shipping"
+                        : `Shipping: ₹${product.deliveryCharge}`}
+                    </span>
+                  </div>
+                )}
+
+                {product.returnPolicy && (
+                  <div className="mb-8 text-sm text-neutral-800 flex items-center gap-2 font-sans">
+                    <History size={16} />
+                    <span>
+                      {product.returnPolicy
+                        ? "7 Days Return Policy"
+                        : "No Return Policy"}
+                    </span>
                   </div>
                 )}
               </div>
-
-              {product.deliveryCharge !== undefined && (
-                <div className="mb-8 text-sm text-neutral-800 flex items-center gap-2">
-                  <Truck size={16} />
-                  <span>
-                    {product.deliveryCharge === 0
-                      ? "Free Shipping"
-                      : `Shipping: ₹${product.deliveryCharge}`}
-                  </span>
-                </div>
-              )}
 
               <div className="mb-8">
                 <label className="text-xs uppercase tracking-widest text-neutral-800 mb-3 block">
@@ -240,7 +242,7 @@ export default function ProductDetailPage() {
                 product={product}
                 userId={user?._id}
                 quantity={quantity}
-                className="text-white bg-gray-900 hover:bg-gray-950 transition disabled:opacity-50" 
+                className="text-white bg-gray-900 hover:bg-gray-950 transition disabled:opacity-50"
               />
             </div>
           </div>
@@ -265,7 +267,7 @@ export default function ProductDetailPage() {
                 <div className="space-y-6">
                   {product.benefits.map((benefit: any, idx: number) => (
                     <div key={idx} className="flex gap-4 items-start">
-                      <ChevronRight
+                      <MoveRight 
                         className="text-neutral-400 flex-shrink-0 mt-1"
                         size={20}
                       />
@@ -320,6 +322,12 @@ export default function ProductDetailPage() {
                     No specifications available
                   </p>
                 )}
+              {product.warranty && (
+                <div className=" text-sm text-neutral-800 flex flex-col leading-none  gap-2 font-sans">
+                  <span className="text-base">Warranty Details</span> <br />
+                  <span>{product.warranty}</span>
+                </div>
+              )}
             </div>
 
             <div className="mt-12 pt-8 border-t border-gray-200">
@@ -363,18 +371,16 @@ export default function ProductDetailPage() {
             </div>
           </div>
         </div>
-   
-      <ProductReviews productId={product._id}/>
-   
-         {product?.category?._id && (
-        <RelatedProducts
-          categoryId={product.category._id}
-          currentProductId={product._id}
-        />
-      )}   
+
+        <ProductReviews productId={product._id} />
+
+        {product?.category?._id && (
+          <RelatedProducts
+            categoryId={product.category._id}
+            currentProductId={product._id}
+          />
+        )}
       </div>
-
-
     </div>
   );
 }

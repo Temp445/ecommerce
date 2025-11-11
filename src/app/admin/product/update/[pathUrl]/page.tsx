@@ -7,8 +7,6 @@ import {
   Upload,
   X,
   Plus,
-  Package,
-  Truck,
   FileImage,
 } from "lucide-react";
 import toast from "react-hot-toast";
@@ -29,9 +27,10 @@ interface FormDataState {
   discountPrice: string;
   stock: string;
   deliveryCharge: string;
-  deliveryDate: string;
   isNewArrival: boolean;
   isActive: boolean;
+  warranty?: string;
+  returnPolicy?: boolean;
 }
 
 interface TechnicalDetails {
@@ -68,9 +67,10 @@ const ProductEditPage: React.FC = () => {
     discountPrice: "",
     stock: "",
     deliveryCharge: "",
-    deliveryDate: "",
     isNewArrival: false,
     isActive: true,
+    returnPolicy: false,
+    warranty: "",
   });
 
   const [technicalDetails, setTechnicalDetails] = useState<TechnicalDetails>({
@@ -129,9 +129,10 @@ const ProductEditPage: React.FC = () => {
         discountPrice: product.discountPrice?.toString() || "",
         stock: product.stock?.toString() || "",
         deliveryCharge: product.deliveryCharge?.toString() || "",
-        deliveryDate: product.deliveryDate?.toString() || "",
         isNewArrival: product.isNewArrival || false,
         isActive: product.isActive || true,
+        warranty: product.warranty || "",
+        returnPolicy: product.returnPolicy || false,
       });
 
       if (product.technicalDetails)
@@ -261,7 +262,6 @@ const ProductEditPage: React.FC = () => {
               <div className="lg:col-span-2 space-y-6">
                 <div className="bg-white border border-gray-200 rounded-xl p-6">
                   <div className="flex items-center gap-2 mb-4">
-                    <Package className="w-5 h-5 text-blue-600" />
                     <h2 className="text-lg font-bold text-gray-800">
                       Basic Information
                     </h2>
@@ -365,7 +365,7 @@ const ProductEditPage: React.FC = () => {
                         name="price"
                         value={formData.price}
                         onChange={handleChange}
-                        placeholder="0.00"
+                        placeholder="5000"
                         min="0"
                         className="w-full px-4 py-2.5 border  rounded-lg no-spinner"
                       />
@@ -379,7 +379,7 @@ const ProductEditPage: React.FC = () => {
                         name="discountPrice"
                         value={formData.discountPrice}
                         onChange={handleChange}
-                        placeholder="0.00"
+                        placeholder="2000"
                         min="0"
                         className="w-full px-4 py-2.5 border rounded-lg no-spinner"
                       />
@@ -405,44 +405,7 @@ const ProductEditPage: React.FC = () => {
                   </div>
                 </div>
 
-                <div className="bg-white border border-gray-200 rounded-xl p-6">
-                  <div className="flex items-center gap-2 mb-4">
-                    <Truck className="w-5 h-5 text-orange-600" />
-                    <h2 className="text-lg font-bold text-gray-800">
-                      Delivery Details
-                    </h2>
-                  </div>
-                  <div className="grid grid-cols-2 gap-4">
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1.5">
-                        Delivery Charge
-                      </label>
-                      <input
-                        type="number"
-                        name="deliveryCharge"
-                        value={formData.deliveryCharge}
-                        onChange={handleChange}
-                        placeholder="50"
-                        min="0"
-                        className="w-full px-4 py-2.5 border border-gray-300 rounded-lg no-spinner transition"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1.5">
-                        Delivery (Days)
-                      </label>
-                      <input
-                        type="number"
-                        name="deliveryDate"
-                        value={formData.deliveryDate}
-                        onChange={handleChange}
-                        placeholder="e.g., 5 days"
-                        min="0"
-                        className="w-full px-4 py-2.5 border border-gray-300 rounded-lg no-spinner transition"
-                      />
-                    </div>
-                  </div>
-                </div>
+              
 
                 <div className="bg-white border border-gray-200 rounded-xl p-6 space-y-5">
                   <div className="flex items-center gap-2 mb-4">
@@ -658,6 +621,49 @@ const ProductEditPage: React.FC = () => {
                 </div>
               </div>
             </div>
+             <div className="bg-white p-6">
+                  <div className="flex items-center gap-2 mb-4">
+                    <h2 className="text-lg font-bold text-gray-800">
+                     Delivery Charge
+                    </h2>
+                  </div>
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      
+                      <input
+                        type="number"
+                        name="deliveryCharge"
+                        value={formData.deliveryCharge}
+                        onChange={handleChange}
+                        placeholder="50"
+                        min="0"
+                        className="w-full px-4 py-2.5 border border-gray-300 rounded-lg no-spinner transition"
+                      />
+                    </div>
+                   
+                  </div>
+                </div>
+             <div className="bg-white p-6">
+                  <div className="flex items-center gap-2 mb-4">
+                    <h2 className="text-lg font-bold text-gray-800">
+                      Warranty Information
+                    </h2>
+                  </div>
+                  <div className="grid grid-cols-1 gap-4">
+                    <div>
+                      
+                      <input
+                        type="text"
+                        name="warranty"
+                        value={formData.warranty}
+                        onChange={handleChange}
+                        placeholder="1 Year Warranty"
+                        className="w-full px-4 py-2.5 border border-gray-300 rounded-lg no-spinner transition"
+                      />
+                    </div>
+                   
+                  </div>
+                </div>
             <div className=" p-6">
               <div className="space-x-3 flex">
                 <label className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg cursor-pointer hover:bg-gray-100 transition">
@@ -682,6 +688,18 @@ const ProductEditPage: React.FC = () => {
                   />
                   <span className="text-sm font-medium text-gray-700">
                     Active Product
+                  </span>
+                </label>
+                <label className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg cursor-pointer hover:bg-gray-100 transition">
+                  <input
+                    type="checkbox"
+                    name="returnPolicy"
+                    checked={formData.returnPolicy}
+                    onChange={handleChange}
+                    className="w-4 h-4 text-blue-600 rounded focus:ring-2 focus:ring-blue-500"
+                  />
+                  <span className="text-sm font-medium text-gray-700">
+                    Return Policy Available
                   </span>
                 </label>
               </div>
