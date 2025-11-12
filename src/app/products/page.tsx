@@ -1,9 +1,10 @@
 "use client";
+
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
-import { Loader2, Search, LayoutGrid, List } from "lucide-react";
-import { useRouter, useSearchParams } from "next/navigation"; // ⬅️ add useSearchParams
+import { Loader2, Search, LayoutGrid, List, Filter } from "lucide-react";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useAuth } from "@/context/AuthProvider";
 import FiltersSidebar from "@/Components/ProductPage/FiltersSidebar";
 import ProductCard from "@/Components/ProductPage/ProductCard";
@@ -12,7 +13,10 @@ export default function ProductsPage() {
   const [products, setProducts] = useState<any[]>([]);
   const [filteredProducts, setFilteredProducts] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
-  const [showFilters, setShowFilters] = useState(true);
+
+  // ✅ hide filters by default on mobile
+  const [showFilters, setShowFilters] = useState(false);
+
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [priceRange, setPriceRange] = useState<[number, number]>([0, 100000]);
@@ -20,13 +24,12 @@ export default function ProductsPage() {
 
   const { user } = useAuth();
   const router = useRouter();
-  const searchParams = useSearchParams(); // ⬅️
+  const searchParams = useSearchParams();
 
   useEffect(() => {
     fetchProducts();
   }, []);
 
-  // ✅ If URL has ?category=<id>, auto-select it
   useEffect(() => {
     const cat = searchParams.get("category");
     if (cat) setSelectedCategories([cat]);
@@ -78,8 +81,6 @@ export default function ProductsPage() {
       case "name":
         filtered.sort((a, b) => a.name.localeCompare(b.name));
         break;
-      default:
-        break;
     }
 
     setFilteredProducts(filtered);
@@ -89,7 +90,7 @@ export default function ProductsPage() {
     setSelectedCategories([]);
     setPriceRange([0, 100000]);
     setSortBy("featured");
-    router.push("/products"); // reset query param
+    router.push("/products");
   };
 
   const categories = Array.from(
@@ -100,7 +101,6 @@ export default function ProductsPage() {
     ).values()
   );
 
-  // loader UI remains the same...
   if (loading) {
     return (
       <div className="flex flex-col justify-center items-center min-h-screen bg-gradient-to-br from-slate-50 to-slate-100">
@@ -111,8 +111,9 @@ export default function ProductsPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-slate-50">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="flex gap-8">
+      <div className="container mx-auto px-3 sm:px-6 py-8">
+        <div className="flex gap-8 relative">
+          {/* Sidebar */}
           <FiltersSidebar
             showFilters={showFilters}
             setShowFilters={setShowFilters}
@@ -126,11 +127,22 @@ export default function ProductsPage() {
             clearFilters={clearFilters}
           />
 
+          {/* Main Section */}
           <main className="flex-1">
-            <div className="flex flex-wrap items-center justify-between mb-6 bg-white border border-slate-200 rounded-xl p-4 shadow-sm">
+            <div className="flex flex-wrap items-center justify-between mb-6 bg-white border border-slate-200 rounded p-4 shadow-sm">
               <div className="text-xl font-medium">Our Products</div>
 
-              <div className="flex items-center gap-2">
+              {/* 👇 Show Filters Button (Mobile only) */}
+              <button
+                onClick={() => setShowFilters(true)}
+                className="flex items-center gap-2 px-4 py-2 border border-slate-300 rounded-md text-slate-700 hover:bg-slate-100 transition lg:hidden"
+              >
+                <Filter size={18} />
+                Filters
+              </button>
+
+              {/* View Mode Switch (Desktop only) */}
+              <div className="md:flex items-center gap-2 hidden">
                 <button
                   onClick={() => setViewMode("grid")}
                   className={`p-2 rounded-lg border ${
@@ -157,6 +169,7 @@ export default function ProductsPage() {
               </div>
             </div>
 
+            {/* Product Grid/List */}
             <div
               className={
                 viewMode === "grid"

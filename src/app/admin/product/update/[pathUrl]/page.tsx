@@ -102,7 +102,6 @@ const ProductEditPage: React.FC = () => {
   useEffect(() => {
     fetchCategories();
     fetchProduct();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const fetchCategories = async () => {

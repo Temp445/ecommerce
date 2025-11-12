@@ -1,19 +1,21 @@
 "use client";
 
 import { useState } from "react";
+import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
+import axios from "axios";
 
-export default function ApplicationUploadForm() {
+const UploadApplicationPage = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [image, setImage] = useState<File | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
-  const [message, setMessage] = useState("");
+  const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    setMessage("");
 
     const formData = new FormData();
     formData.append("title", title);
@@ -21,24 +23,21 @@ export default function ApplicationUploadForm() {
     if (image) formData.append("image", image);
 
     try {
-      const res = await fetch("/api/application", {
-        method: "POST",
-        body: formData,
+      const res = await axios.post("/api/application", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
       });
 
-      const data = await res.json();
-
+      const data = res.data;
       if (data.success) {
-        setMessage("Application uploaded successfully!");
-        setTitle("");
-        setDescription("");
-        setImage(null);
-        setPreview(null);
+        toast.success("Application uploaded successfully!");
+        router.push("/admin/application");
       } else {
-        setMessage(data.message || "Failed to upload");
+        toast.error(data.message || "Failed to upload");
       }
     } catch (error) {
-      setMessage("Something went wrong");
+      toast.error("Something went wrong");
     }
 
     setLoading(false);
@@ -50,16 +49,9 @@ export default function ApplicationUploadForm() {
         Add New Application
       </h2>
 
-      {message && (
-        <p className="mb-4 text-center font-medium text-blue-700">{message}</p>
-      )}
-
       <form onSubmit={handleSubmit} className="space-y-5">
-        
         <div>
-          <label className="block font-medium mb-1 text-gray-800">
-            Title
-          </label>
+          <label className="block font-medium mb-1 text-gray-800">Title</label>
           <input
             type="text"
             className="w-full border p-2 rounded"
@@ -70,7 +62,6 @@ export default function ApplicationUploadForm() {
           />
         </div>
 
-        {/* Description */}
         <div>
           <label className="block font-medium mb-1 text-gray-800">
             Description
@@ -85,7 +76,6 @@ export default function ApplicationUploadForm() {
           ></textarea>
         </div>
 
-        {/* Image Upload */}
         <div>
           <label className="block font-medium mb-2 text-gray-800">
             Upload Image
@@ -103,14 +93,9 @@ export default function ApplicationUploadForm() {
           />
         </div>
 
-        {/* Preview */}
         {preview && (
           <div className="mt-3">
-            <img
-              src={preview}
-              alt="Preview"
-              className="w-40 rounded border"
-            />
+            <img src={preview} alt="Preview" className="w-40 rounded border" />
           </div>
         )}
 
@@ -124,4 +109,6 @@ export default function ApplicationUploadForm() {
       </form>
     </div>
   );
-}
+};
+
+export default UploadApplicationPage;

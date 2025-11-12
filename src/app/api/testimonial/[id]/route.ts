@@ -13,6 +13,10 @@ export async function GET(req: Request, { params }: { params: Promise<{ id: stri
         { status: 404 }
       );
     }
+    return NextResponse.json(
+      { success: true, data: testimonial },
+      { status: 200 }
+    );
 
   } catch (error: any) {
     return NextResponse.json(

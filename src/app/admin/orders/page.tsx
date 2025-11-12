@@ -63,7 +63,6 @@ export default function AdminOrdersPage() {
     return colors[status] || "bg-gray-50 border-gray-200 text-gray-800";
   };
 
-  
   const filteredOrders = orders.filter((order) => {
     const name = order?.shippingAddress?.Name || "";
     return (
@@ -72,12 +71,23 @@ export default function AdminOrdersPage() {
     );
   });
 
+  if (!loading && filteredOrders.length === 0) {
+    return (
+      <div className="text-center py-12 bg-white rounded-lg border border-gray-200">
+        <AlertCircle className="mx-auto mb-3 text-gray-400" size={40} />
+        <p className="text-gray-600 font-medium">No orders found</p>
+        <p className="text-gray-500 text-sm mt-1">
+          Try adjusting your search criteria
+        </p>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 p-6">
       <div className="max-w-7xl mx-auto">
         <div className="mb-8">
           <div className="flex items-center gap-3 mb-4">
-            
             <div>
               <h1 className="text-4xl font-bold text-gray-900">Orders</h1>
               <p className="text-gray-600 text-sm">
@@ -103,13 +113,52 @@ export default function AdminOrdersPage() {
           </div>
         </div>
 
-        {filteredOrders.length === 0 ? (
-          <div className="text-center py-12 bg-white rounded-lg border border-gray-200">
-            <AlertCircle className="mx-auto mb-3 text-gray-400" size={40} />
-            <p className="text-gray-600 font-medium">No orders found</p>
-            <p className="text-gray-500 text-sm mt-1">
-              Try adjusting your search criteria
-            </p>
+        {loading ? (
+          <div>
+            {[...Array(4)].map((_, index) => (
+              <div
+                key={index}
+                className="bg-white rounded-lg border border-gray-200 overflow-hidden  hover:shadow-md transition"
+              >
+                <div className="p-5 border-b border-gray-100 bg-gradient-to-r from-gray-50 to-white">
+                  <div className="flex flex-wrap justify-between items-start gap-4">
+                    <div className="flex-1">
+                      <div className="h-6 bg-gray-200 rounded w-1/4 mb-2 animate-pulse"></div>
+                      <div className="h-4 bg-gray-200 rounded w-1/3 mb-4 animate-pulse"></div>
+                      <div className="flex gap-4 mt-3 text-sm text-gray-600">
+                        <div className="h-4 bg-gray-200 rounded w-1/6 animate-pulse"></div>
+                        <div className="h-4 bg-gray-200 rounded w-1/6 animate-pulse"></div>
+                        <div className="h-4 bg-gray-200 rounded w-1/4 animate-pulse"></div>
+                      </div>
+                    </div>
+                    <div className="text-right text-sm">
+                      <div className="h-4 bg-gray-200 rounded w-1/6 mb-2 animate-pulse"></div>
+                      <div className="flex flex-col gap-1">
+                        <div className="h-4 bg-gray-200 rounded w-1/4 mb-2 animate-pulse"></div>
+                        <div className="h-4 bg-gray-200 rounded w-1/6 animate-pulse"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="p-5">
+                  <div className="h-5 bg-gray-200 rounded w-1/4 mb-4 animate-pulse"></div>
+                  <div className="space-y-3">
+                    <div className=" rounded-lg p-4">
+                      <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-4">
+                        <div className="flex-1">
+                          <div className="h-5 bg-gray-200 rounded w-1/3 mb-2 animate-pulse"></div>
+                          <div className="flex gap-4 mt-2 text-sm text-gray-600">
+                            <div className="h-4 bg-gray-200 rounded w-1/6 animate-pulse"></div>
+                            <div className="h-4 bg-gray-200 rounded w-1/6 animate-pulse"></div>
+                            <div className="h-4 bg-gray-200 rounded w-1/4 animate-pulse"></div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
         ) : (
           <div className="space-y-5">
@@ -131,14 +180,16 @@ export default function AdminOrdersPage() {
                         <span>
                           <strong>Customer Name :</strong>{" "}
                           {order.shippingAddress?.Name}
-                        </span> |
+                        </span>{" "}
+                        |
                         <span>
                           <strong>Contact No :</strong>{" "}
                           {order.shippingAddress?.MobileNumber}
-                        </span> |
+                        </span>{" "}
+                        |
                         <span className="font-sans">
-                        <strong>  Total Price:</strong>{" "}
-                         ₹ {order.totalAmount.toLocaleString()}
+                          <strong> Total Price:</strong> ₹{" "}
+                          {order.totalAmount.toLocaleString()}
                         </span>
                       </div>
                     </div>
@@ -153,9 +204,7 @@ export default function AdminOrdersPage() {
                             {order.paymentMethod}
                           </span>
                         </p>
-                        <span>
-                          {order.paymentStatus}
-                        </span>
+                        <span>{order.paymentStatus}</span>
                       </div>
                     </div>
                   </div>
@@ -191,7 +240,15 @@ export default function AdminOrdersPage() {
                                     : item.priceAtPurchase * item.quantity}
                                 </strong>
                               </span>
-                              <span className="font-sans"> Delivery Charge : { item.deliveryCharge > 0 ? <span> ₹  { item.deliveryCharge } </span> : "Free" }</span>
+                              <span className="font-sans">
+                                {" "}
+                                Delivery Charge :{" "}
+                                {item.deliveryCharge > 0 ? (
+                                  <span> ₹ {item.deliveryCharge} </span>
+                                ) : (
+                                  "Free"
+                                )}
+                              </span>
                             </div>
                           </div>
 
@@ -225,10 +282,14 @@ export default function AdminOrdersPage() {
                                         : "cursor-pointer hover:border-gray-400"
                                     } ${getStatusColor(item.orderStatus)}`}
                                   >
-                                    <option value="Processing">Processing</option>
+                                    <option value="Processing">
+                                      Processing
+                                    </option>
                                     <option value="Packed">Packed</option>
                                     <option value="Shipped">Shipped</option>
-                                    <option value="Out for Delivery">Out for Delivery</option>
+                                    <option value="Out for Delivery">
+                                      Out for Delivery
+                                    </option>
                                     <option value="Delivered">Delivered</option>
                                     <option value="Returned">Returned</option>
                                     <option value="Refunded">Refunded</option>

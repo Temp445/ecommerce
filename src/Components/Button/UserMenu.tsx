@@ -27,7 +27,7 @@ const UserMenu = () => {
     >
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="hidden sm:flex items-center gap-2 justify-center text-gray-800 rounded py-3 px-4 transition group"
+        className="flex items-center gap-2 justify-center text-gray-800 rounded py-3 md:px-4 transition group"
       >
         {isLoggedIn ? (
           <div className="flex gap-2 items-center">

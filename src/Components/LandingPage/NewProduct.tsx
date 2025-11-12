@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Link from "next/link";
-import { ShoppingCart, CircleChevronRight } from "lucide-react";
+import { CircleChevronRight } from "lucide-react";
 
 import { useAuth } from "@/context/AuthProvider";
 import AddToCartButton from "../Button/AddToCartButton";
@@ -11,7 +11,7 @@ import AddToCartButton from "../Button/AddToCartButton";
 export default function NewProduct() {
   const [newArrivals, setNewArrivals] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
-    const { user } = useAuth();
+  const { user } = useAuth();
 
 
   useEffect(() => {
@@ -20,6 +20,7 @@ export default function NewProduct() {
 
   const fetchNewArrivals = async () => {
     try {
+      setLoading(true);
       const res = await axios.get("/api/product");
       const allProducts = res.data?.data || [];
       const filtered = allProducts.filter((p: any) => p.isNewArrival);
@@ -31,13 +32,7 @@ export default function NewProduct() {
     }
   };
 
-  if (loading)
-    return (
-      <div className="flex justify-center py-16">
-      </div>
-    );
 
-  if (!newArrivals.length) return null;
 
   return (
     <section className="py-14 bg-gradient-to-b from-slate-100 to-white">
@@ -47,7 +42,7 @@ export default function NewProduct() {
             New Arrivals
           </h2>
         </div>
-
+ {!loading && newArrivals.length > 0 && (
         <div className="grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 gap-6">
           {newArrivals.slice(0, 8).map((product, idx) => (
             <div
@@ -137,6 +132,35 @@ export default function NewProduct() {
             </div>
           ))}
         </div>
+ )}
+        {!loading && newArrivals.length === 0 && (
+          <div className="text-center py-16">
+            <p className="text-gray-600 text-base">No New Arrivals found</p>  
+      </div>
+        )}
+        {loading && (
+          <div className="grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 gap-6">
+            {[...Array(4)].map((_, index) => (
+              <div
+                key={index}
+                className="flex bg-white rounded-sm border border-gray-200 hover:border-slate-700 transition-all duration-300 overflow-hidden"
+              >
+                <div className="bg-gray-300 h-64 w-52 animate-pulse"></div>
+                <div className="p-6 flex-1 flex flex-col justify-between">
+                  <div>
+                    <div className="h-4 bg-gray-300 rounded w-3/4 mb-4 animate-pulse"></div>
+                    <div className="h-4 bg-gray-300 rounded w-full mb-2 animate-pulse"></div>
+                    <div className="h-4 bg-gray-300 rounded w-5/6 mb-2 animate-pulse"></div>
+                  </div>
+                  <div className="mt-4">
+                    <div className="h-6 bg-gray-300 rounded w-1/4 mb-2 animate-pulse"></div>
+                    <div className="h-8 bg-gray-300 rounded w-3/4 animate-pulse"></div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
     </section>
   );

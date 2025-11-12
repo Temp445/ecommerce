@@ -1,6 +1,7 @@
 "use client";
 
-import { Edit, Trash2, Plus } from "lucide-react";
+import axios from "axios";
+import { Edit, Trash2, Plus, Loader2 } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
@@ -16,8 +17,8 @@ export default function ApplicationList() {
   const [loading, setLoading] = useState(true);
 
   const fetchData = async () => {
-    const res = await fetch("/api/application");
-    const data = await res.json();
+    const res = await axios.get("/api/application");
+    const data = await res.data;
 
     if (data.success) {
       setApplications(data.data);
@@ -33,13 +34,17 @@ export default function ApplicationList() {
   const handleDelete = async (id: string) => {
     if (!confirm("Are you sure you want to delete this?")) return;
 
-    const res = await fetch(`/api/application/${id}`, { method: "DELETE" });
-    const data = await res.json();
+    const res = await axios.delete(`/api/application/${id}`, { method: "DELETE" });
+    const data = res.data;
 
     if (data.success) {
       setApplications((prev) => prev.filter((item) => item._id !== id));
     }
   };
+
+  if (!loading && applications.length === 0) {
+    return <p className="text-center text-gray-500">No testimonials found.</p>;
+  }
 
   return (
     <div className="max-w-7xl mx-auto p-6">
@@ -54,13 +59,26 @@ export default function ApplicationList() {
         </Link>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
-        {applications.length === 0 ? (
-          <p className="col-span-full items-center justify-center text-center text-gray-600">
-            No applications found.
-          </p>
-        ) : (
-          applications.map((app) => (
+      {loading ? (
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+          {[...Array(8)].map((_, idx) => (
+            <div
+              key={idx}
+              className="border border-gray-300 flex flex-col rounded-lg shadow p-2 bg-white animate-pulse h-64"
+            >
+              <div className="bg-gray-300 h-40 w-full mb-3 rounded"></div>
+              <div className="h-6 bg-gray-300 rounded w-3/4 mb-2"></div>
+              <div className="h-4 bg-gray-300 rounded w-full mb-4"></div>
+              <div className="flex justify-end gap-2 mt-auto">
+                <div className="h-8 w-8 bg-gray-300 rounded"></div>
+                <div className="h-8 w-8 bg-gray-300 rounded"></div>
+              </div>
+            </div>
+          ))}
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+          {applications.map((app) => (
             <div
               key={app._id}
               className="border rounded-lg shadow p-2 bg-white"
@@ -75,7 +93,9 @@ export default function ApplicationList() {
                 {app.title}
               </h3>
 
-              <p className="mt-2 text-gray-700 line-clamp-2 text-sm">{app.description}</p>
+              <p className="mt-2 text-gray-700 line-clamp-2 text-sm">
+                {app.description}
+              </p>
 
               <div className="flex justify-end gap-2 mt-3">
                 <Link
@@ -95,9 +115,9 @@ export default function ApplicationList() {
                 </button>
               </div>
             </div>
-          ))
-        )}
-      </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }

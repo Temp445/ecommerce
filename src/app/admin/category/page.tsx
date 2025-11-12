@@ -11,7 +11,6 @@ import {
   Trash2,
   Loader2,
   Image as ImageIcon,
-  Search,
 } from "lucide-react";
 
 const CategoryPage = () => {
@@ -51,17 +50,21 @@ const CategoryPage = () => {
     }
   };
 
+  if (!loading && categories.length === 0) {
+    return <p className="text-center text-gray-500">No categories found.</p>;
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 p-4 sm:p-8">
       <div className="max-w-7xl mx-auto">
-        <div className="bg-white shadow-xl rounded-3xl p-6  mb-6">
+        <div className="p-6">
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 ">
             <div className="leading-none ">
-              <h1 className="text-3xl font-bold text-gray-800 mb-2">Product <span className="text-gray-400">Categories</span> </h1>
+              <h1 className="text-3xl font-bold text-gray-800 mb-2">Product Categories </h1>
             </div>
             <Link
               href="/admin/category/upload"
-              className="flex items-center bg-gray-900 text-white px-5 py-3 rounded-xl  transition-all duration-200 shadow-lg hover:shadow-xl font-medium transform "
+              className="flex items-center bg-gray-900 text-white px-5 py-3 rounded  transition-all duration-200 shadow-lg hover:shadow-xl font-medium transform "
             >
               <Plus className="w-5 h-5 mr-2" /> Add Category
             </Link>
@@ -70,13 +73,27 @@ const CategoryPage = () => {
         </div>
 
         {loading ? (
-          <div className="bg-white rounded-3xl shadow-xl p-20 flex flex-col items-center justify-center">
-            <Loader2 className="animate-spin w-12 h-12 text-blue-600 mb-4" />
-            <p className="text-gray-500 font-medium">Loading categories...</p>
-          </div>
+          <div>
+            {[...Array(5)].map((_, idx) => (
+              <div
+                key={idx}
+                className="flex items-center gap-4 p-5 border border-gray-200 rounded-lg mb-4 animate-pulse"
+              >
+                <div className="w-16 h-16 rounded-xl bg-gray-200 flex items-center justify-center flex-shrink-0"></div>
+                <div className="flex-1 min-w-0 border-gray-300 border-l pl-3">
+                  <div className="h-6 bg-gray-200 rounded w-1/3 mb-2"></div>
+                  <div className="h-4 bg-gray-200 rounded w-1/4"></div>
+                </div>
+                <div className="flex items-center gap-2 flex-shrink-0">
+                  <div className="h-8 w-20 bg-gray-200 rounded"></div>
+                  <div className="h-8 w-20 bg-gray-200 rounded"></div>
+                </div>
+              </div>
+            ))}
+            </div>
         ) : (
 
-          <div className="bg-white rounded-3xl shadow-xl overflow-hidden border border-gray-100">
+          <div className="bg-white rounded shadow-xl overflow-hidden border border-gray-100">
             {categories.map((cat, index) => (
               <div
                 key={cat._id}

@@ -24,6 +24,7 @@ const Sidebar = () => {
     { name: "Categories", href: "/admin/category", icon: Folder },
     { name: "Orders", href: "/admin/orders", icon: Settings },
     { name: "Applications", href: "/admin/application", icon: Settings },
+    { name: "Testimonials", href: "/admin/testimonial", icon: Settings },
   ];
 
   return (

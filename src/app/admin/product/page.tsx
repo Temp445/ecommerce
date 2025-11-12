@@ -6,7 +6,7 @@ import Link from "next/link";
 import { Edit, Trash2, Plus, Loader2 } from "lucide-react";
 import toast from "react-hot-toast";
 
-export default function ProductDisplayPage() {
+const ProductPage = () => {
   const [products, setProducts] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [deleting, setDeleting] = useState<string | null>(null);
@@ -46,10 +46,9 @@ export default function ProductDisplayPage() {
     }
   };
 
-  if (loading) {
+  if (!loading && products.length === 0) {
     return (
-      <div className="flex justify-center items-center h-64">
-      </div>
+       <p className="text-center text-gray-500">No products found.</p>
     );
   }
 
@@ -66,8 +65,23 @@ export default function ProductDisplayPage() {
         </Link>
       </div>
 
-      {products.length === 0 ? (
-        <p className="text-center text-gray-500">No products found.</p>
+      {loading ? (
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+          {[...Array(8)].map((_, idx) => (
+            <div
+              key={idx}
+              className="bg-white border border-gray-400 rounded-xl shadow-sm p-4 animate-pulse"
+            > 
+              <div className="aspect-square rounded-lg bg-gray-300 mb-3"></div>
+              <div className="h-6 bg-gray-300 rounded w-3/4 mb-2"></div>
+              <div className="h-4 bg-gray-300 rounded w-full mb-4"></div> 
+              <div className="flex justify-end gap-2 mt-auto">
+                <div className="h-8 w-8 bg-gray-300 rounded"></div>
+                <div className="h-8 w-8 bg-gray-300 rounded"></div>
+              </div>
+            </div>
+          ))}
+        </div>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {products.map((product) => (
@@ -143,3 +157,5 @@ export default function ProductDisplayPage() {
     </div>
   );
 }
+
+export default ProductPage;

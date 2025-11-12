@@ -1,96 +1,89 @@
 "use client";
 
-import Image from "next/image";
-import React from "react";
-import Suspension from "@/assets/Usage/Suspension.jpg";
-import Steering from "@/assets/Usage/steering.jpg";
-import Tailgate from "@/assets/Usage/Tailgate.jpg";
-import Presses from "@/assets/Usage/presses.jpg";
-import Brake from "@/assets/Usage/Brake.jpg";
-import Lifting from "@/assets/Usage/Automotive.jpg";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 
-const Uses = [
-  {
-    id: 1,
-    title: "Car Lifting Systems",
-    description:
-      "Hydraulic cylinders power vehicle lifts in service stations and garages for smooth, stable lifting and lowering.",
-    image: Lifting,
-  },
-  {
-    id: 2,
-    title: "Brake Systems",
-    description:
-      "Used in hydraulic brake systems to convert pressure into stopping force for safe and controlled braking.",
-    image: Brake,
-  },
-  {
-    id: 3,
-    title: "Suspension Systems",
-    description:
-      "Provide damping and stability for a comfortable ride by absorbing shocks and vibrations on rough roads.",
-    image: Suspension,
-  },
-  {
-    id: 4,
-    title: "Steering Mechanisms",
-    description:
-      "Assist with effortless steering control using hydraulic pressure in power steering systems.",
-    image: Steering,
-  },
-  {
-    id: 5,
-    title: "Convertible Roof & Tailgate Systems",
-    description:
-      "Enable smooth operation of car roofs, hoods, and tailgates through compact hydraulic actuators.",
-    image: Tailgate,
-  },
-  {
-    id: 6,
-    title: "Hydraulic Presses in Manufacturing",
-    description:
-      "Used in automotive production for forming, pressing, and assembling metal components.",
-    image: Presses,
-  },
-];
+const IndustryUsage = () => {
+  const [applications, setApplications] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
 
-export default function IndustryUsage() {
+  const fetchApplications = async () => {
+    try {
+      setLoading(true);
+      const res = await axios.get("/api/application");
+      setApplications(res.data.data || []);
+    } catch (err: any) {
+      console.error(
+        err.response?.data?.message || "Failed to load applications"
+      );
+    } finally {
+      setLoading(false);
+    }
+  };
+  useEffect(() => {
+    fetchApplications();
+  }, []);
+
   return (
-    <section className="py-20 bg-gray-100">
-      <div className="container mx-auto px-6">
-       <h2 className="text-4xl font-semibold text-gray-900 mb-6  tracking-tight">
-            Hydraulic Cylinder
-            <br />
-            <span className="text-gray-400">Applications</span>
-          </h2>
+    <section className=" py-5 md:py-20 bg-gray-100">
+      <div className="container mx-auto px-4 md:px-6">
+        <h2 className=" text-2xl md:text-4xl font-semibold text-gray-900 mb-6  tracking-tight">
+          Hydraulic Cylinder
+          <br />
+          <span className="text-gray-400">Applications</span>
+        </h2>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-8">
-          {Uses.map((use) => (
-            <div
-              key={use.id}
-              className="group relative bg-white rounded-xl overflow-hidden hover:border shadow-md hover:shadow-xl transition-all duration-500"
-            >
-              <div className="relative h-56 w-full">
-                <Image
-                  src={use.image}
-                  alt={use.title}
-                  fill
-                  className="object-cover group-hover:scale-110 transition-transform duration-700"
-                />
-              </div>
+        {!loading && applications.length > 0 && (
+          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-8">
+            {applications.slice(0, 6).map((app) => (
+              <div
+                key={app._id}
+                className="group relative bg-white rounded-xl overflow-hidden hover:border shadow-md hover:shadow-xl transition-all duration-500"
+              >
+                <div className="relative  w-full">
+                  <img
+                    src={app.image || "/placeholder.png"}
+                    alt={app.title}
+                    className="object-cover h-56 w-full group-hover:scale-110 transition-transform duration-700"
+                  />
+                </div>
 
-              <div className="p-6 text-center">
-                <h3 className="text-xl font-semibold text-gray-900 mb-3 transition-colors">
-                  {use.title}
-                </h3>
-                <p className="text-gray-600 text-sm leading-relaxed">
-                  {use.description}
-                </p>
+                <div className="p-6 text-center">
+                  <h3 className="2xl:text-xl font-semibold text-gray-900 mb-3 transition-colors">
+                    {app.title}
+                  </h3>
+                  <p className="text-gray-600 text-xs 2xl:text-sm leading-relaxed">
+                    {app.description}
+                  </p>
+                </div>
               </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        )}
+        {!loading && applications.length === 0 && (
+          <div className="text-center py-16">
+            <p className="text-gray-600 text-base">No Applications found</p>
+          </div>
+        )}
+        {loading && (
+          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-8 ">
+            {[...Array(6)].map((_, index) => (
+              <div
+                key={index}
+                className="flex flex-col  bg-white rounded-xl overflow-hidden  shadow-md"
+              >
+                <div className="bg-gray-300 h-56 w-full animate-pulse"></div>
+                <div className="p-6 text-center">
+                  <div className="h-6 bg-gray-300 rounded w-3/4 mx-auto mb-3 animate-pulse"></div>
+                  <div className="h-4 bg-gray-300 rounded w-full mx-auto animate-pulse"></div>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
     </section>
   );
-}
+};
+
+export default IndustryUsage;

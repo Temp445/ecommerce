@@ -2,7 +2,6 @@
 
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 export default function CategorySection() {
@@ -38,7 +37,7 @@ export default function CategorySection() {
 
         {!loading && categories.length > 0 && (
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 md:gap-6">
-            {categories.slice(0, 6).map((cat) => (
+            {categories.slice(0, 5).map((cat) => (
               <button
                 key={cat._id}
                 onClick={() => router.push(`/products?category=${cat._id}`)}
