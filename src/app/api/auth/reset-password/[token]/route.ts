@@ -5,13 +5,13 @@ import dbConnect from "@/lib/dbConnect";
 
 export async function POST(
   req: Request,
-  { params }: { params: { token: string } }
+  { params }: { params: Promise <{ token: string }> }
 ) {
   try {
     await dbConnect();
 
     const { password } = await req.json();
-    const { token } = params;
+    const { token } = await params;
 
     const user = await User.findOne({
       resetPasswordToken: token,
