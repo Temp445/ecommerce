@@ -6,7 +6,6 @@ import axios from "axios";
 import {
   Minus,
   Plus,
-  Loader2,
   Package,
   Truck,
   Shield,
@@ -50,12 +49,12 @@ const ProductDetailPage = () => {
   if (loading) {
   return (
     <div className="min-h-screen bg-white animate-pulse">
-      <div className="container mx-auto px-6 lg:px-12 py-12">
+      <div className="container mx-auto px-4 md:px-6 lg:px-12 py-12">
         <div className="grid lg:grid-cols-12 gap-16">
           <div className="lg:col-span-7 space-y-6">
             <div className="aspect-[4/3] bg-gray-200 rounded-md"></div>
 
-            <div className="flex gap-4 overflow-x-auto">
+            <div className="flex md:gap-4 overflow-x-auto">
               {Array.from({ length: 4 }).map((_, i) => (
                 <div key={i} className="w-24 h-24 bg-gray-200 rounded-md flex-shrink-0"></div>
               ))}
@@ -164,7 +163,7 @@ const ProductDetailPage = () => {
             <div className="relative mb-6 group">
               <div className="aspect-[4/3] bg-neutral-50 border border-gray-200 rounded overflow-hidden">
                 {discountPercentage > 0 && (
-                  <span className="absolute top-6 right-5 text-xs font-medium tracking-widest text-white bg-emerald-600 rounded px-4 py-2 z-10">
+                  <span className="absolute md:top-6 md:right-5 text-xs font-medium tracking-widest text-white bg-emerald-600 rounded px-4 py-2 z-10">
                     Upto {discountPercentage}% off
                   </span>
                 )}
@@ -334,7 +333,7 @@ const ProductDetailPage = () => {
           </div>
         </div>
 
-        <div className="mt-24 grid lg:grid-cols-12 gap-16">
+        <div className=" mt-14 md:mt-24 grid lg:grid-cols-12 gap-16">
           <div className="lg:col-span-7">
             <h2 className="text-2xl font-light text-neutral-900 mb-6 tracking-tight">
               Product Details

@@ -192,7 +192,7 @@ const OrderDetailPage = () => {
 
   return (
     <div className="min-h-screen bg-gray-100">
-      <div className="max-w-6xl mx-auto px-4 py-6">
+      <div className="max-w-6xl mx-auto px-2 md:px-4 py-6">
         <div className="text-sm text-gray-600 mb-4">
           <Link href="/myorders" className="hover:text-blue-600 cursor-pointer">
             My Orders
@@ -201,9 +201,9 @@ const OrderDetailPage = () => {
           <span className="text-gray-900">Order Details</span>
         </div>
 
-        <div className="bg-white shadow-sm mb-6 p-6 rounded-lg">
+        <div className="bg-white shadow-sm mb-6 p-2 rounded-lg">
           <div className="flex items-center justify-between mb-4">
-            <h1 className={`text-lg font-semibold`}>{item.orderStatus}</h1>
+            <h1 className={`text-sm md:text-lg font-semibold`}>{item.orderStatus}</h1>
             <p className="text-gray-500 text-sm">
               {item.orderStatus === "Delivered"
                 ? `Delivered ${item.deliveredAt

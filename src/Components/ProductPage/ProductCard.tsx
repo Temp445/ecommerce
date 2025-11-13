@@ -79,7 +79,7 @@ export default function ProductCard({
 
         <div className="mb-4 font-sans">
           <div className="flex items-baseline gap-2 mb-1">
-            <p className="text-2xl font-medium text-slate-900">
+            <p className="text-xl md:text-2xl font-medium text-slate-900">
               ₹{(product.discountPrice || product.price)?.toLocaleString()}
             </p>
             {product.discountPrice > 0 && (

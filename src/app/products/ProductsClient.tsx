@@ -104,7 +104,7 @@ const ProductsClient = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-slate-50">
       <div className="container mx-auto px-3 sm:px-6 py-8">
-        <div className="flex  gap-8 relative">
+        <div className="flex  md:gap-8 relative">
           <div>
             <div className="w-64 lg:w-72 h-full bg-white rounded-lg shadow-md p-6 hidden lg:block">
               <div className="h-6 w-32 bg-slate-200 rounded mb-6"></div>
@@ -116,7 +116,7 @@ const ProductsClient = () => {
               </div>
           </div>
 
-          <div className="flex-1">
+          <div className="w-full md:flex-1">
             <div className="flex flex-wrap items-center justify-between mb-6 bg-white border border-slate-200 rounded p-4 shadow-sm animate-pulse">
           <div className="w-40 h-6 bg-slate-200 rounded"></div>
           <div className="hidden md:flex gap-2">

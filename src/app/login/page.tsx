@@ -45,13 +45,11 @@ const LoginPage = () => {
         return;
       }
 
-      //  Store user data
       localStorage.setItem("token", data.token);
       localStorage.setItem("userId", data.user._id);
       localStorage.setItem("role", data.user.role);
       localStorage.setItem("user", JSON.stringify(data.user));
 
-      //  Merge guest cart into user cart (if exists)
       const guestCart = JSON.parse(localStorage.getItem("guestCart") || "[]");
 
       if (guestCart.length > 0) {
@@ -70,7 +68,6 @@ const LoginPage = () => {
             }),
           });
 
-          // Clear guest cart after merging
           localStorage.removeItem("guestCart");
         } catch (err) {
           console.error("Cart merge error:", err);
@@ -81,7 +78,7 @@ const LoginPage = () => {
       window.dispatchEvent(new Event("userLogin"));
 
       if (data.user.role === "admin") {
-        router.push("/admin");
+        router.push("/admin/product");
       } else {
         router.push("/");
       }

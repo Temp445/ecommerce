@@ -43,7 +43,7 @@ const PopularProducts = () => {
         </h2>
 
         <Link
-          href="/"
+          href="/products"
           className="bg-gray-900 text-white h-11 pl-3 pr-1 flex  items-center rounded text-sm"
         >
           View All <ChevronRight className="w-5 h-5" />{" "}
@@ -76,7 +76,7 @@ const PopularProducts = () => {
                 key={product._id}
                 className="group relative overflow-hidden rounded-lg shadow-md hover:shadow-xl border transition-all duration-300 bg-white"
               >
-                <div className="relative w-full   overflow-hidden">
+                <Link href={`/products/${product.pathUrl}`} className="relative w-full overflow-hidden">
                   <img
                     src={
                       product.thumbnail ||
@@ -86,7 +86,7 @@ const PopularProducts = () => {
                     alt={product.name}
                     className=" h-52 w-full object-contain group-hover:scale-110 transition-transform duration-300"
                   />
-                </div>
+                </Link>
 
                 <div className="p-4">
                   <h3 className="font-semibold text-lg text-gray-800 mb-1 line-clamp-2">

@@ -162,12 +162,12 @@ const totalAmount = totalProductAmount + totalDeliveryCharge;
       <div className="bg-white border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
-            <h1 className="text-2xl font-semibold text-gray-900">Checkout</h1>
+            <h1 className="text-2xl  text-gray-900">Checkout</h1>
           </div>
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 py-8">
+      <div className="max-w-7xl mx-auto px-2 md:px-4 py-8">
         <div className="mb-12">
           <div className="flex items-center justify-between relative">
             <div className="absolute top-4 left-0 right-0 h-px bg-slate-200" />
@@ -184,7 +184,7 @@ const totalAmount = totalProductAmount + totalDeliveryCharge;
               return (
                 <div
                   key={s.num}
-                  className="flex flex-col items-center relative bg-white px-2"
+                  className="flex flex-col items-center relative md:bg-white px-2"
                 >
                   <div
                     className={`w-8 h-8 rounded-full flex items-center justify-center text-sm transition-all ${
@@ -294,7 +294,7 @@ const totalAmount = totalProductAmount + totalDeliveryCharge;
                   <span className="text-gray-900 font-bold text-base">
                     Total Amount
                   </span>
-                  <span className="text-2xl font-bold font-sans text-gray-900">
+                  <span className="text-xl font-bold font-sans text-gray-900">
                     ₹{totalAmount.toLocaleString()}
                   </span>
                 </div>

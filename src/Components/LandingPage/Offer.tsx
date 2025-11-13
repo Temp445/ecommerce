@@ -13,7 +13,7 @@ const Offer = () => {
       />
 
       <div className="relative z-10 max-w-3xl mx-auto">
-        <h2 className="text-4xl font-extrabold mb-4 leading-tight">
+        <h2 className="text-4xl  mb-4 leading-tight">
           Save <span className="text-yellow-300">15%</span> on Bulk Orders
         </h2>
         <p className="text-lg text-blue-100 mb-8">
@@ -23,7 +23,7 @@ const Offer = () => {
         <motion.button
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
-          className="px-8 py-3 bg-white text-black font-semibold rounded-full shadow-md hover:bg-yellow-300 hover:text-black transition-colors duration-300"
+          className="px-8 py-3 bg-white text-black font-semibold rounded-full shadow-md"
           onClick={() => alert("Offer claimed! Our team will contact you soon.")}
         >
           Contact Us

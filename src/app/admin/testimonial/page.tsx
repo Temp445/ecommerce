@@ -47,10 +47,10 @@ const TestimonialsPage = () => {
   return (
     <div className="max-w-6xl mx-auto px-4 py-10">
         <div className="flex items-center justify-between mb-8">
-        <h1 className="text-3xl font-bold text-gray-800">Testimonials</h1>
+        <h1 className="text-2xl md:text-3xl font-medium text-gray-800">Testimonials</h1>
         <Link href="/admin/testimonial/upload" className="flex items-center bg-gray-900 text-white px-4 py-2 rounded-lg">
           <Plus className="w-5 h-5 mr-2" />
-          Add Testimonial
+          Add
         </Link>
       </div>
 

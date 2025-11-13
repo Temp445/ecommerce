@@ -57,7 +57,7 @@ const Navbar = () => {
 
   return (
     <nav className="bg-white sticky inset-0.5 top-0 z-50 border-b border-gray-100">
-      <div className="container mx-auto px-2 sm:px-4 lg:px-0 xl:px-6 ">
+      <div className="container mx-auto px-2 sm:px-4 lg:px-2 xl:px-6 ">
         <div className="flex justify-between items-center h-16 ">
           <Link
             href="/"

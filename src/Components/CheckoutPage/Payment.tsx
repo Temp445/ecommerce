@@ -127,7 +127,7 @@ const Payment = ({
           <CreditCard className="text-white w-5 h-5" />
         </div>
         <div>
-          <h2 className="text-xl font-semibold text-gray-900">
+          <h2 className="text-xl  text-gray-900">
             Payment Method
           </h2>
           <p className="text-sm text-gray-500">
@@ -215,7 +215,7 @@ const Payment = ({
       <button
         onClick={handlePlaceOrder}
         disabled={placingOrder}
-        className={`w-full py-4 rounded-xl text-white font-bold text-lg transition-all flex items-center justify-center gap-2 ${
+        className={`w-full py-4 rounded-xl text-white text-lg transition-all flex items-center justify-center gap-2 ${
           placingOrder
             ? "bg-gray-400 cursor-not-allowed"
             : "bg-emerald-600 hover:bg-emerald-700 shadow-lg hover:shadow-xl"

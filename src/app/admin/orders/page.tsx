@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { Search, AlertCircle } from "lucide-react";
+import { Package, Truck , ClockFading } from "lucide-react";
 
 export default function AdminOrdersPage() {
   const [orders, setOrders] = useState<any[]>([]);
@@ -71,6 +72,31 @@ export default function AdminOrdersPage() {
     );
   });
 
+const stats = {
+  total: orders.reduce((acc, order) => acc + order.items.length, 0),
+  processing: orders.reduce(
+    (acc, order) =>
+      acc + order.items.filter((item: any) => item.orderStatus === "Processing").length,
+    0
+  ),
+  shipped: orders.reduce(
+    (acc, order) =>
+      acc + order.items.filter((item: any) => item.orderStatus === "Shipped").length,
+    0
+  ),
+  delivered: orders.reduce(
+    (acc, order) =>
+      acc + order.items.filter((item: any) => item.orderStatus === "Delivered").length,
+    0
+  ),
+  cancelled: orders.reduce(
+    (acc, order) =>
+      acc + order.items.filter((item: any) => item.orderStatus === "Cancelled").length,
+    0
+  ),
+};
+
+
   if (!loading && filteredOrders.length === 0) {
     return (
       <div className="text-center py-12 bg-white rounded-lg border border-gray-200">
@@ -84,18 +110,67 @@ export default function AdminOrdersPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 p-6">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 py-6 px-2 md:p-6">
       <div className="max-w-7xl mx-auto">
         <div className="mb-8">
           <div className="flex items-center gap-3 mb-4">
             <div>
-              <h1 className="text-4xl font-bold text-gray-900">Orders</h1>
+              <h1 className="text-2xl font-medium text-gray-900">Orders</h1>
               <p className="text-gray-600 text-sm">
                 Manage and track customer orders
               </p>
             </div>
           </div>
         </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4 mb-6">
+            <div className=" rounded p-4 border ">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className=" text-sm font-medium">Total Orders</p>
+                  <p className="text-2xl font-bold mt-1">{stats.total}</p>
+                </div>
+                <Package className="w-10 h-10" />
+              </div>
+            </div>
+            <div className="bg-gradient-to-br from-yellow-50 to-yellow-100 rounded p-4 border border-yellow-200">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-yellow-600 text-sm font-medium">Processing</p>
+                  <p className="text-2xl font-bold text-yellow-900 mt-1">{stats.processing}</p>
+                </div>
+                <ClockFading className="w-10 h-10 text-yellow-600 opacity-80" />
+              </div>
+            </div>
+            <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded p-4 border border-blue-200">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-blue-600 text-sm font-medium">Shipped</p>
+                  <p className="text-2xl font-bold text-blue-900 mt-1">{stats.shipped}</p>
+                </div>
+                <Truck className="w-10 h-10 text-blue-600 opacity-80" />
+              </div>
+            </div>
+            <div className="bg-gradient-to-br from-green-50 to-green-100 rounded p-4 border border-green-200">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-green-600 text-sm font-medium">Delivered</p>
+                  <p className="text-2xl font-bold text-green-900 mt-1">{stats.delivered}</p>
+                </div>
+                <Package className="w-10 h-10 text-green-600 opacity-80" />
+              </div>
+            </div>
+            <div className="bg-gradient-to-br from-red-50 to-red-100 rounded p-4 border border-red-200">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-red-700 text-sm font-medium">Cancelled</p>
+                  <p className="text-2xl font-bold text-red-900 mt-1">{stats.cancelled}</p>
+                </div>
+                <Package className="w-10 h-10 text-red-600 opacity-80" />
+              </div>
+            </div>
+          </div>
+
 
         <div className="mb-6">
           <div className="relative">
@@ -108,7 +183,7 @@ export default function AdminOrdersPage() {
               placeholder="Search by Order ID or Customer Name..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="w-full pl-11 pr-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none bg-white shadow-sm transition"
+              className="w-full pl-11 pr-4 py-3 border border-gray-200 rounded-lg  outline-none bg-white shadow-sm transition"
             />
           </div>
         </div>
@@ -167,26 +242,26 @@ export default function AdminOrdersPage() {
                 key={order._id}
                 className="bg-white rounded-lg border border-gray-200 overflow-hidden hover:border-gray-500 hover:shadow-md transition"
               >
-                <div className="p-5 border-b border-gray-100 bg-gradient-to-r from-gray-50 to-white">
+                <div className=" p-2 md:p-5 border-b border-gray-100 bg-gradient-to-r from-gray-50 to-white">
                   <div className="flex flex-wrap justify-between items-start gap-4">
                     <div className="flex-1">
                       <p className="text-xs text-gray-500 uppercase tracking-wide mb-1">
                         Order ID
                       </p>
-                      <p className="font-mono text-lg font-bold text-blue-600">
+                      <p className="font-mono text-sm md:text-lg font-bold text-blue-600">
                         {order._id}
                       </p>
-                      <div className="flex gap-4 mt-3 text-sm text-gray-600">
+                      <div className="flex flex-col lg:flex-row   gap-4 mt-3 text-sm text-gray-600">
                         <span>
                           <strong>Customer Name :</strong>{" "}
                           {order.shippingAddress?.Name}
                         </span>{" "}
-                        |
+                        
                         <span>
                           <strong>Contact No :</strong>{" "}
                           {order.shippingAddress?.MobileNumber}
                         </span>{" "}
-                        |
+                        
                         <span className="font-sans">
                           <strong> Total Price:</strong> ₹{" "}
                           {order.totalAmount.toLocaleString()}
@@ -210,7 +285,7 @@ export default function AdminOrdersPage() {
                   </div>
                 </div>
 
-                <div className="p-5">
+                <div className="p-2 md:p-5">
                   <p className="font-semibold text-gray-900 mb-4 flex items-center gap-2">
                     Order Items ({order.items.length})
                   </p>
@@ -227,7 +302,7 @@ export default function AdminOrdersPage() {
                             <p className="font-semibold text-gray-900">
                               {item.productName}
                             </p>
-                            <div className="flex gap-4 mt-2 text-sm text-gray-600">
+                            <div className="flex flex-col gap-4 mt-2 text-sm text-gray-600">
                               <span>
                                 Qty: <strong>{item.quantity}</strong>
                               </span>
@@ -255,7 +330,7 @@ export default function AdminOrdersPage() {
                           <div className="flex flex-col sm:flex-row gap-3 sm:items-center">
                             <div className="flex flex-col sm:flex-row gap-3 sm:items-center">
                               <div>
-                                <label className="block text-xs text-center font-semibold text-gray-700 mb-2 uppercase tracking-wide">
+                                <label className="block text-xs md:text-center font-semibold text-gray-700 mb-2 uppercase tracking-wide">
                                   Order Status
                                 </label>
 

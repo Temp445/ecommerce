@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 
-export default function CategorySection() {
+const CategorySection = () => {
   const [categories, setCategories] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const router = useRouter();
@@ -78,3 +78,5 @@ export default function CategorySection() {
     </section>
   );
 }
+
+export default CategorySection;

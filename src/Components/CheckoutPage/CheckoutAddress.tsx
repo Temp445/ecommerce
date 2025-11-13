@@ -65,7 +65,7 @@ const CheckoutAddress = ({
   };
 
   return (
-    <section className="bg-white rounded-2xl md:p-6">
+    <section className="bg-white rounded-2xl p-2 md:p-6">
       <div className="flex items-center justify-between mb-6">
         <h2 className="text-xl font- flex items-center gap-3 text-slate-900">
           <div className="bg-emerald-500 p-2.5 rounded-xl">

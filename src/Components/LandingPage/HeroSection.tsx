@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { ChevronLeft, ChevronRight, Zap } from "lucide-react";
 import Link from "next/link";
 
-export default function LandingPage() {
+const HeroSection = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
 
   const slides = [
@@ -24,7 +24,6 @@ export default function LandingPage() {
     },
   ];
 
-  // Extended slides array for infinite loop
   const extendedSlides = [...slides, ...slides, ...slides];
 
   useEffect(() => {
@@ -55,7 +54,7 @@ export default function LandingPage() {
   return (
     <div className="min-h-fit bg-white overflow-hidden container mx-auto">
       <div className="relative h-fit flex flex-col md:flex-row items-center overflow-hidden">
-        <div className=" md:w-1/2 flex flex-col  justify-between p-4 xl:p-6 2xl:p-14 order-2 md:order-1">
+        <div className=" md:w-1/2 flex flex-col justify-between p-4 xl:p-6 2xl:p-14 order-2 md:order-1">
           <div className="mb-20 mt-5 md:mt-10">
             <h1 className=" text-4xl xl:text-6xl 2xl:text-7xl mb-2 text-gray-900  leading-tight transition-all duration-500">
               High-Pressure
@@ -153,3 +152,5 @@ export default function LandingPage() {
     </div>
   );
 }
+
+export default HeroSection;

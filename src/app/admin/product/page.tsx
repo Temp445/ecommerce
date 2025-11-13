@@ -52,11 +52,12 @@ const ProductPage = () => {
     );
   }
 
+
   return (
     <div className="p-6">
 
       <div className="flex justify-between items-center mb-8">
-        <h1 className="text-2xl font-bold text-slate-800">All Products</h1>
+        <h1 className="text-2xl font-medium text-slate-800">All Products</h1>
         <Link
           href="/admin/product/upload"
           className="flex items-center gap-2 bg-gray-900 text-white px-4 py-2 rounded-lg transition"
@@ -65,8 +66,22 @@ const ProductPage = () => {
         </Link>
       </div>
 
+<div className="flex gap-4 mb-6">
+  <div className="p-6 bg-gradient-to-r from-blue-50 to-blue-100 rounded-lg shadow-md flex flex-col justify-center h-28">
+    <p className="text-gray-700 font-medium text-sm mb-2">Total Products</p>
+    <span className="font-bold text-2xl text-blue-900">{products.length}</span>
+  </div>
+
+  <div className="p-6 bg-gradient-to-r from-red-50 to-red-100 rounded-lg shadow-md  flex flex-col justify-center h-28">
+    <p className="text-red-700 font-medium text-sm mb-2">Out of Stock</p>
+    <span className="font-bold text-2xl text-red-900">{products.filter(p => p.stock <= 0).length}</span>
+  </div>
+</div>
+
+
+
       {loading ? (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 2xl:grid-cols-4 gap-6">
           {[...Array(8)].map((_, idx) => (
             <div
               key={idx}
@@ -83,7 +98,7 @@ const ProductPage = () => {
           ))}
         </div>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {products.map((product) => (
             <div
               key={product._id}
@@ -113,14 +128,14 @@ const ProductPage = () => {
               <div className="mt-auto">
                 <div className="flex justify-between items-center">
                   <div className="flex gap-3 items-center">
-                    <p className="text-slate-800 font-semibold">
+                    <p className="text-slate-800 font-semibold font-sans">
                       ₹
                       {product.discountPrice
                         ? product.discountPrice.toLocaleString()
                         : product.price?.toLocaleString()}
                     </p>
                     {product.discountPrice > 0 && (
-                      <p className="text-gray-600 text-xs line-through">
+                      <p className="text-gray-600 text-xs line-through font-sans">
                         ₹{product.price?.toLocaleString()}
                       </p>
                     )}

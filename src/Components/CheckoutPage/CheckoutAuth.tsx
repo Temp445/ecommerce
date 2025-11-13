@@ -11,10 +11,10 @@ const CheckoutAuth = ({ user }: { user: any }) => {
   return (
     <section className="w-full p-4">
       {user ? (
-        <div className=" rounded-2xl p-6 text-gray-900">
+        <div className=" rounded-2xl md:p-6 text-gray-900">
           <div className="flex items-start gap-4">
             <div className="bg-emerald-500 text-white  p-3 rounded-xl">
-              <CheckCircle className="w-6 h-6" />
+              <CheckCircle className=" w-5 h-5 md:w-6 md:h-6" />
             </div>
             <div className="flex-1">
               <h3 className="text-lg md:text-xl font-medium mb-1">Login Detail</h3>
@@ -25,7 +25,7 @@ const CheckoutAuth = ({ user }: { user: any }) => {
                   <UserCircle className="w-5 h-5" />
                   <div>
                     <p className="text-xs">Full Name</p>
-                    <p className="font-semibold">
+                    <p className="font-medium">
                       {user?.firstName}
                     </p>
                   </div>
@@ -34,7 +34,7 @@ const CheckoutAuth = ({ user }: { user: any }) => {
                   <Mail className="w-5 h-5" />
                   <div>
                     <p className="text-xs">Email Address</p>
-                    <p className="font-semibold">{user.email}</p>
+                    <p className="font-medium">{user.email}</p>
                   </div>
                 </div>
               </div>

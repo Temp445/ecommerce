@@ -38,7 +38,7 @@ export default function NewProduct() {
     <section className="py-14 bg-gradient-to-b from-slate-100 to-white">
       <div className="container mx-auto px-4 md:px-8">
         <div className="mb-7">
-          <h2 className="lg:text-3xl 2xl:text-4xl font-medium text-gray-900 mb-4 tracking-tight">
+          <h2 className="text-3xl 2xl:text-4xl font-medium text-gray-900 mb-4 tracking-tight">
             New Arrivals
           </h2>
         </div>

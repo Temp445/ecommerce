@@ -42,7 +42,7 @@ export default function BlogSection() {
               <div className="inline-block px-4 py-2 bg-gray-300 text-gray-900 text-xs font-bold uppercase tracking-wider mb-4">
                 Blogs
               </div>
-              <h2 className="text-5xl font-bold text-gray-900 mb-4 leading-tight">
+              <h2 className="text-3xl text-gray-900 mb-4 leading-tight">
                 Hydraulic<br/> Cyclinders
               </h2>
           

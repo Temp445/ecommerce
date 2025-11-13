@@ -156,7 +156,7 @@ const OrdersPage = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 py-6">
-        <h1 className="text-3xl font-medium text-gray-800 mb-6">My Orders</h1>
+        <h1 className="text-2xl md:text-3xl font-medium text-gray-800 mb-6">My Orders</h1>
 
         <div className="space-y-4">
           {flattenedItems.map((item, index) => {
@@ -165,7 +165,7 @@ const OrdersPage = () => {
 
             return (
               <div key={index} className="bg-white shadow">
-                <div className="bg-gray-700 text-gray-200 px-6 py-3 flex justify-between items-center">
+                <div className="bg-gray-700 text-gray-200 px-6 py-3 flex flex-col md:flex-row justify-between md:items-center">
                   <span className="text-xs">
                     Ordered on:{" "}
                     {new Date(item.orderDate).toLocaleDateString("en-IN", {

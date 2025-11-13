@@ -170,10 +170,10 @@ export default function ProductReviews({ productId }: ProductReviewsProps) {
   if (reviews.length === 0) return null;
 
   return (
-    <div className="min-h-screen  py-12 px-4 ">
+    <div className="h-fit py-12 md:px-4 ">
       <div className="mx-auto">
         <div className="mb-12">
-          <h1 className="text-4xl text-gray-900 mb-2">Customer Reviews</h1>
+          <h1 className="text-2xl md:text-3xl text-gray-900 mb-2">Customer Reviews</h1>
           <p className="text-gray-600">
             {reviews.length} {reviews.length === 1 ? "review" : "reviews"} from
             verified customers
@@ -184,7 +184,7 @@ export default function ProductReviews({ productId }: ProductReviewsProps) {
           <div className="lg:col-span-1">
             <div className="bg-white rounded-lg shadow-sm border border-gray-300 p-6 lg:sticky lg:top-6">
               <div className="text-center mb-6">
-                <div className="text-5xl font-medium text-gray-900 mb-2">
+                <div className="text-4xl font-medium text-gray-900 mb-2">
                   {averageRating}
                 </div>
                 <div className="flex items-center justify-center gap-1 mb-2">
