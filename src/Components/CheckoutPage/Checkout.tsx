@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
@@ -44,7 +44,7 @@ export type CartItem = {
   deliveryCharge?: number;
 };
 
-export default function Checkout() {
+const Checkout = () => {
   const router = useRouter();
   const { user } = useAuth();
 
@@ -322,3 +322,5 @@ const totalAmount = totalProductAmount + totalDeliveryCharge;
     </div>
   );
 }
+
+export default Checkout;

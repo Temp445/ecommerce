@@ -26,10 +26,10 @@ interface CheckoutAddressProps {
   onSelect: React.Dispatch<React.SetStateAction<string>>;
 }
 
-export default function CheckoutAddress({
+const CheckoutAddress = ({
   selectedAddressId,
   onSelect,
-}: CheckoutAddressProps) {
+}: CheckoutAddressProps) => {
 
   const { user } = useAuth();
 
@@ -163,3 +163,5 @@ export default function CheckoutAddress({
     </section>
   );
 }
+
+export default CheckoutAddress;

@@ -6,7 +6,7 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import Link from "next/link";
 
-export default function OrderDetailPage() {
+const OrderDetailPage = () => {
   const { itemId, orderId } = useParams();
   const router = useRouter();
   const [updating, setUpdating] = useState(false);
@@ -423,3 +423,5 @@ export default function OrderDetailPage() {
     </div>
   );
 }
+
+export default OrderDetailPage;

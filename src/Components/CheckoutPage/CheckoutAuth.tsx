@@ -5,7 +5,7 @@ import { User, CheckCircle, Mail, UserCircle } from "lucide-react";
 import CheckoutLogin from "./CheckoutLogin";
 import CheckoutRegister from "./CheckoutRegister";
 
-export default function CheckoutAuth({ user }: { user: any }) {
+const CheckoutAuth = ({ user }: { user: any }) => {
   const [showRegister, setShowRegister] = useState(false);
 
   return (
@@ -79,3 +79,4 @@ export default function CheckoutAuth({ user }: { user: any }) {
     </section>
   );
 }
+export default CheckoutAuth;

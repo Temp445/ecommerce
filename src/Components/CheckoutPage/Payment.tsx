@@ -24,7 +24,7 @@ interface PaymentProps {
   router: ReturnType<typeof useRouter>;
 }
 
-export default function Payment({
+const Payment = ({
   user,
   cartItems,
   selectedAddressId,
@@ -32,7 +32,7 @@ export default function Payment({
   setPaymentMethod,
   totalAmount,
   router,
-}: PaymentProps) {
+}: PaymentProps) => {
   const [placingOrder, setPlacingOrder] = useState(false);
 
   const handlePlaceOrder = async () => {
@@ -241,3 +241,5 @@ export default function Payment({
     </section>
   );
 }
+
+export default Payment;

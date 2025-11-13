@@ -19,13 +19,13 @@ interface AddToCartButtonProps {
   className?: string;
 }
 
-export default function AddToCartButton({
+const AddToCartButton = ({
   product,
   userId,
   quantity = 1,
   disabled,
   className,
-}: AddToCartButtonProps) {
+}: AddToCartButtonProps) => {
   const [loading, setLoading] = useState(false);
   const { refreshCart } = useCart();
   const Router = useRouter()
@@ -103,3 +103,5 @@ export default function AddToCartButton({
     </button>
   );
 }
+
+export default AddToCartButton;

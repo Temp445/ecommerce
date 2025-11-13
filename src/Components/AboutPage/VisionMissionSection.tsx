@@ -7,7 +7,6 @@
         <section className="py-24">
         <div className="max-w-7xl mx-auto px-6 md:px-12">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
-            {/* Left Column */}
             <div className="lg:col-span-4">
                 <h2 className="text-3xl font-light text-gray-900 mb-6">
                 Vision &<br />Mission

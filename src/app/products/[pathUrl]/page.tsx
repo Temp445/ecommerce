@@ -20,7 +20,7 @@ import { useAuth } from "@/context/AuthProvider";
 import RelatedProducts from "@/Components/ProductPage/RelatedProducts";
 import ProductReviews from "@/Components/ProductPage/ProductReviews";
 
-export default function ProductDetailPage() {
+const ProductDetailPage = () => {
   const { pathUrl } = useParams();
   const [product, setProduct] = useState<any>(null);
   const [selectedImage, setSelectedImage] = useState(0);
@@ -384,3 +384,5 @@ export default function ProductDetailPage() {
     </div>
   );
 }
+
+export default ProductDetailPage;

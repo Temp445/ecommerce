@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, FormEvent } from 'react';
-import { Mail, Phone, MapPin, Send } from 'lucide-react';
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -51,7 +50,6 @@ export default function ContactPage() {
 
   return (
     <div className="min-h-screen bg-white">
-      {/* Hero */}
       <section className="py-32 px-4 sm:px-6 lg:px-8">
         <div className="max-w-2xl mx-auto text-center">
           <h1 className="text-5xl font-light text-black mb-4">
@@ -63,10 +61,8 @@ export default function ContactPage() {
         </div>
       </section>
 
-      {/* Contact Section */}
       <section className="py-16 px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-24">
-          {/* Left - Info */}
           <div className="space-y-12">
             <div>
               <p className="text-gray-400 text-sm mb-2">EMAIL</p>
@@ -84,7 +80,6 @@ export default function ContactPage() {
             </div>
           </div>
 
-          {/* Right - Form */}
           <div>
             <form onSubmit={handleSubmit} className="space-y-6">
               <div>

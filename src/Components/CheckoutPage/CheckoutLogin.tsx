@@ -3,11 +3,9 @@
 import React, { useState } from "react";
 import { Mail, Lock } from "lucide-react";
 
-export default function CheckoutLogin({
-  setShowRegister,
-}: {
+const CheckoutLogin = ({setShowRegister}: {
   setShowRegister: (v: boolean) => void;
-}) {
+}) => {
   const [loginData, setLoginData] = useState({ email: "", password: "" });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -132,9 +130,9 @@ export default function CheckoutLogin({
         >
           {loading ? "Logging in..." : "Sign In"}
         </button>
-
-        
       </form>
     </>
   );
 }
+
+export default CheckoutLogin;

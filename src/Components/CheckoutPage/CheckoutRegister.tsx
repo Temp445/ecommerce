@@ -1,15 +1,14 @@
 "use client";
 
 import React, { useState } from "react";
-import { Mail } from "lucide-react";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 
-export default function CheckoutRegister({
+const CheckoutRegister = ({
   setShowRegister,
 }: {
   setShowRegister: (v: boolean) => void;
-}) {
+}) => {
   const router = useRouter();
   const [registerData, setRegisterData] = useState({
     firstName: "",
@@ -45,7 +44,6 @@ export default function CheckoutRegister({
 
       toast.success("Registration successful!");
 
-      // Auto login
       const loginRes = await fetch("/api/auth/user-login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -193,4 +191,6 @@ export default function CheckoutRegister({
       </form>
     </>
   );
-}
+};
+
+export default CheckoutRegister;

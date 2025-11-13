@@ -9,15 +9,15 @@ interface PaginationProps {
   onPageChange: (page: number) => void;
 }
 
-export default function Pagination({
+const Pagination = ({
   currentPage,
   totalItems,
   itemsPerPage,
   onPageChange,
-}: PaginationProps) {
+}: PaginationProps) => {
   const totalPages = Math.ceil(totalItems / itemsPerPage);
 
-  if (totalPages <= 1) return null; // Hide if only one page
+  if (totalPages <= 1) return null; 
 
   const handlePrev = () => {
     if (currentPage > 1) onPageChange(currentPage - 1);
@@ -29,7 +29,6 @@ export default function Pagination({
 
   return (
     <div className="flex justify-center items-center gap-2 mt-6">
-      {/* Prev Button */}
       <button
         onClick={handlePrev}
         disabled={currentPage === 1}
@@ -38,7 +37,6 @@ export default function Pagination({
         Prev
       </button>
 
-      {/* Numbered Buttons */}
       {Array.from({ length: totalPages }).map((_, i) => {
         const page = i + 1;
         return (
@@ -56,7 +54,6 @@ export default function Pagination({
         );
       })}
 
-      {/* Next Button */}
       <button
         onClick={handleNext}
         disabled={currentPage === totalPages}
@@ -67,3 +64,5 @@ export default function Pagination({
     </div>
   );
 }
+
+export default Pagination;

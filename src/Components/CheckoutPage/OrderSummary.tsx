@@ -4,7 +4,7 @@ import React from "react";
 import { ShoppingCart, Plus, Minus, Trash2, PackageOpen } from "lucide-react";
 import { CartItem } from "./Checkout";
 
-export default function OrderSummary({
+const OrderSummary = ({
   cartItems,
   onIncrease,
   onDecrease,
@@ -14,7 +14,7 @@ export default function OrderSummary({
   onIncrease: (id: string) => void;
   onDecrease: (id: string) => void;
   onRemove: (id: string) => void;
-}) {
+}) => {
   return (
     <section className="bg-white rounded-2xl p-5 h-fit">
       <div className="flex items-center justify-between mb-6 pb-4 border-b-2 border-gray-200">
@@ -159,3 +159,5 @@ export default function OrderSummary({
     </section>
   );
 }
+
+export default OrderSummary;

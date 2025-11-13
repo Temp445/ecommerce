@@ -28,14 +28,13 @@ type Order = {
   items: OrderItem[];
 };
 
-export default function OrdersPage() {
+const OrdersPage = () => {
   const { user } = useAuth();
   const [orders, setOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState(true);
   const [reviewedProducts, setReviewedProducts] = useState<string[]>([]);
   const router = useRouter();
 
-  // Fetch Orders
   const fetchOrders = async (userId: string) => {
     try {
       setLoading(true);
@@ -48,7 +47,6 @@ export default function OrdersPage() {
     }
   };
 
-  // Fetch Reviewed Products
   const fetchReviewedProducts = async (userId: string, orders: Order[]) => {
     try {
       const reviewed: string[] = [];
@@ -222,3 +220,5 @@ export default function OrdersPage() {
     </div>
   );
 }
+
+export default OrdersPage;
