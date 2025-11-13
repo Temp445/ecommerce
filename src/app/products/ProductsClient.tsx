@@ -1,9 +1,9 @@
 "use client";
 
-import React, { useEffect, useState, Suspense } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
-import { Loader2, Search, LayoutGrid, List, Filter } from "lucide-react";
+import { Search, LayoutGrid, List, Filter } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useAuth } from "@/context/AuthProvider";
 import FiltersSidebar from "@/Components/ProductPage/FiltersSidebar";
@@ -100,13 +100,59 @@ const ProductsClient = () => {
     ).values()
   );
 
-  if (loading) {
-    return (
-      <div className="flex flex-col justify-center items-center min-h-screen bg-gradient-to-br from-slate-50 to-slate-100">
-        <Loader2 className="animate-spin text-gray-600 mb-4" size={48} />
+ if (loading) {
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-slate-50">
+      <div className="container mx-auto px-3 sm:px-6 py-8">
+        <div className="flex  gap-8 relative">
+          <div>
+            <div className="w-64 lg:w-72 h-full bg-white rounded-lg shadow-md p-6 hidden lg:block">
+              <div className="h-6 w-32 bg-slate-200 rounded mb-6"></div>
+              <div className="space-y-4">
+                {Array.from({ length: 6 }).map((_, index) => (  
+                  <div key={index} className="h-5 bg-slate-200 rounded w-full"></div>
+                ))}
+              </div>  
+              </div>
+          </div>
+
+          <div className="flex-1">
+            <div className="flex flex-wrap items-center justify-between mb-6 bg-white border border-slate-200 rounded p-4 shadow-sm animate-pulse">
+          <div className="w-40 h-6 bg-slate-200 rounded"></div>
+          <div className="hidden md:flex gap-2">
+            <div className="w-10 h-10 bg-slate-200 rounded-lg"></div>
+            <div className="w-10 h-10 bg-slate-200 rounded-lg"></div>
+          </div>
+          <div className="w-24 h-8 bg-slate-200 rounded lg:hidden"></div>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {Array.from({ length: 9 }).map((_, index) => (
+            <div
+              key={index}
+              className="bg-white border border-slate-200 rounded shadow-sm overflow-hidden animate-pulse"
+            >
+              <div className="bg-slate-200 h-64 w-full"></div>
+
+              <div className="p-5 space-y-3">
+                <div className="w-3/4 h-5 bg-slate-200 rounded"></div>
+                <div className="w-full h-4 bg-slate-200 rounded"></div>
+                <div className="w-2/3 h-4 bg-slate-200 rounded"></div>
+                <div className="flex justify-between items-center mt-4">
+                  <div className="w-20 h-6 bg-slate-200 rounded"></div>
+                  <div className="w-24 h-9 bg-slate-300 rounded"></div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+          </div>
+        </div>
       </div>
-    );
-  }
+    </div>
+  );
+}
+
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-slate-50">

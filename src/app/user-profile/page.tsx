@@ -21,7 +21,6 @@ const ProfilePage = () => {
   const {user, setUser } = useAuth();
   const id = user?._id
 
-  const isLoggedIn = !!user;
 
   useEffect(() => {
     if (!id) return;
@@ -84,11 +83,51 @@ const handleSave = async () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-50 to-gray-100">
-        <div className="flex flex-col items-center gap-4">
-          <div className="relative w-20 h-20">
-            <div className="absolute inset-0 border-4 border-emerald-200 rounded-full" />
-            <div className="absolute inset-0 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin" />
+      <div className="min-h-screen bg-slate-50 py-12 px-4 animate-pulse">
+        <div className="max-w-6xl mx-auto space-y-6">
+          <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6 flex items-center justify-between">
+            <div className="flex items-center gap-4">
+              <div className="w-14 h-14 rounded-lg bg-slate-200" />
+              <div>
+                <div className="h-5 bg-slate-200 rounded w-32 mb-2" />
+                <div className="h-3 bg-slate-100 rounded w-48" />
+              </div>
+            </div>
+            <div className="h-10 w-32 bg-slate-200 rounded-lg" />
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+            <div className="space-y-6">
+              <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6 flex flex-col items-center">
+                <div className="w-28 h-28 rounded-full bg-slate-200 mb-4" />
+                <div className="h-4 bg-slate-200 rounded w-24 mb-2" />
+                <div className="h-3 bg-slate-100 rounded w-32" />
+              </div>
+
+              <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6 space-y-4">
+                <div className="h-4 bg-slate-200 rounded w-28" />
+                <div className="space-y-3 mt-4">
+                  {[1, 2].map((_, i) => (
+                    <div key={i} className="flex gap-3 items-center">
+                      <div className="w-8 h-8 rounded-lg bg-slate-200" />
+                      <div className="flex-1 space-y-2">
+                        <div className="h-3 bg-slate-100 w-24 rounded" />
+                        <div className="h-4 bg-slate-200 w-40 rounded" />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            <div className="lg:col-span-3 bg-white rounded-xl shadow-sm border border-slate-200 p-8 space-y-6">
+              <div className="h-6 bg-slate-200 w-48 rounded mb-4" />
+              <div className="space-y-6">
+                {[1, 2, 3, 4].map((_, i) => (
+                  <div key={i} className="h-12 bg-slate-100 rounded-lg" />
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       </div>

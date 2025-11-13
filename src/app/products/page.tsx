@@ -4,7 +4,7 @@ export const dynamic = "force-dynamic";
 
 const ProductPage = () => {
   return (
-    <Suspense fallback={<div className="p-8 text-center">Loading products...</div>}>
+    <Suspense fallback={<div className="p-8 text-center"></div>}>
         <ProductsClient />
     </Suspense>
   )

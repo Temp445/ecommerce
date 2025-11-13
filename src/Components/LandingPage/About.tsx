@@ -1,14 +1,14 @@
 'use client'
 
 import Link from 'next/link'
-import factoryImg from '@/assets/images/Bg.png'
+import Bg from '@/assets/Bg.png'
 
 const About = () => {
   return (
     <section
       className="relative bg-fixed bg-center bg-cover py-20 text-white"
       style={{
-        backgroundImage: `url(${factoryImg.src})`,
+        backgroundImage: `url(${Bg.src})`,
         backgroundAttachment: 'fixed',
         backgroundPosition: 'center',
         backgroundSize: 'cover',

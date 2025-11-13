@@ -48,7 +48,7 @@ const UserMenu = () => {
       </button>
 
         {isOpen && (
-        <div className="absolute -right-14  w-56 bg-white border border-gray-200 rounded-2xl shadow-2xl py-2 z-50 animate-in fade-in slide-in-from-top-2 duration-200">
+        <div className="absolute -right-16  w-56 bg-white border border-gray-200 rounded shadow-2xl py-2 z-50 animate-in fade-in slide-in-from-top-2 duration-200">
           {isLoggedIn ? (
             <>
               <div className="px-4 py-3 border-b border-gray-100">
@@ -65,7 +65,7 @@ const UserMenu = () => {
 
               <div className="py-1">
                 <Link
-                  href={`/user-profile/${user?._id}`}
+                  href="/user-profile"
                   className="flex items-center px-4 py-2.5 text-gray-700 text-sm hover:text-black hover:bg-gray-300 transition-all duration-200 group"
                 >
                   <div className="w-8 h-8 rounded-lg bg-gray-100 flex items-center justify-center mr-3 group-hover:bg-gray-300 transition-colors">

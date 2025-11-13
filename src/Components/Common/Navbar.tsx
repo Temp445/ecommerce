@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { Menu, X, Search } from "lucide-react";
 import Image from "next/image";
-import Logo from "@/assets/images/AceLogo.png";
+import Logo from "@/assets/AceLogo.png";
 import UserMenu from "../Button/UserMenu";
 import { useAuth } from "@/context/AuthProvider";
 import SearchBar from "../Button/SearchBar";

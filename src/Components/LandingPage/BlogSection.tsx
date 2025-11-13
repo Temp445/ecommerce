@@ -2,8 +2,7 @@
 
 import React from "react";
 import Image from "next/image";
-import hydraulic from "@/assets/images/product1.png"
-import hydraulic2 from "@/assets/Usage/truck.jpg"
+import hydraulic from "@/assets/product1.png"
 
 const categories = [
   {

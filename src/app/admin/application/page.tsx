@@ -1,7 +1,7 @@
 "use client";
 
 import axios from "axios";
-import { Edit, Trash2, Plus, Loader2 } from "lucide-react";
+import { Edit, Trash2, Plus } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 

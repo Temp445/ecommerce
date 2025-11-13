@@ -48,12 +48,98 @@ const ProductDetailPage = () => {
   };
 
   if (loading) {
-    return (
-      <div className="flex justify-center items-center min-h-screen">
-        <Loader2 className="animate-spin text-slate-900" size={40} />
+  return (
+    <div className="min-h-screen bg-white animate-pulse">
+      <div className="container mx-auto px-6 lg:px-12 py-12">
+        <div className="grid lg:grid-cols-12 gap-16">
+          <div className="lg:col-span-7 space-y-6">
+            <div className="aspect-[4/3] bg-gray-200 rounded-md"></div>
+
+            <div className="flex gap-4 overflow-x-auto">
+              {Array.from({ length: 4 }).map((_, i) => (
+                <div key={i} className="w-24 h-24 bg-gray-200 rounded-md flex-shrink-0"></div>
+              ))}
+            </div>
+          </div>
+
+          <div className="lg:col-span-5 space-y-6">
+            <div className="w-40 h-4 bg-gray-200 rounded"></div>
+            <div className="h-8 bg-gray-300 rounded w-3/4"></div>
+            <div className="h-4 bg-gray-200 rounded w-1/3"></div>
+
+            <div className="space-y-2">
+              <div className="w-32 h-6 bg-gray-300 rounded"></div>
+              <div className="w-24 h-4 bg-gray-200 rounded"></div>
+            </div>
+
+            <div className="grid grid-cols-2 gap-4">
+              {Array.from({ length: 2 }).map((_, i) => (
+                <div key={i} className="border border-gray-200 p-4 rounded-md space-y-3">
+                  <div className="w-20 h-3 bg-gray-200 rounded"></div>
+                  <div className="w-24 h-4 bg-gray-300 rounded"></div>
+                </div>
+              ))}
+            </div>
+
+            <div className="flex flex-wrap gap-6">
+              {Array.from({ length: 2 }).map((_, i) => (
+                <div key={i} className="w-40 h-4 bg-gray-200 rounded"></div>
+              ))}
+            </div>
+
+            <div className="space-y-3">
+              <div className="w-24 h-3 bg-gray-200 rounded"></div>
+              <div className="flex items-center gap-2">
+                <div className="w-12 h-12 bg-gray-200 rounded"></div>
+                <div className="w-16 h-12 bg-gray-200 rounded"></div>
+                <div className="w-12 h-12 bg-gray-200 rounded"></div>
+              </div>
+            </div>
+
+            <div className="h-12 bg-gray-300 rounded-md w-full"></div>
+          </div>
+        </div>
+
+        <div className="mt-24 grid lg:grid-cols-12 gap-16">
+          <div className="lg:col-span-7 space-y-6">
+            <div className="w-48 h-6 bg-gray-300 rounded"></div>
+            <div className="space-y-3">
+              {Array.from({ length: 5 }).map((_, i) => (
+                <div key={i} className="h-4 bg-gray-200 rounded"></div>
+              ))}
+            </div>
+          </div>
+
+          <div className="lg:col-span-5 space-y-6">
+            <div className="w-44 h-6 bg-gray-300 rounded"></div>
+            {Array.from({ length: 5 }).map((_, i) => (
+              <div
+                key={i}
+                className="flex justify-between border-b border-gray-200 py-3"
+              >
+                <div className="w-24 h-3 bg-gray-200 rounded"></div>
+                <div className="w-32 h-3 bg-gray-200 rounded"></div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="mt-12 grid grid-cols-1 sm:grid-cols-3 gap-8">
+          {Array.from({ length: 3 }).map((_, i) => (
+            <div key={i} className="flex items-start gap-3">
+              <div className="w-8 h-8 bg-gray-300 rounded-full"></div>
+              <div className="flex-1 space-y-2">
+                <div className="w-32 h-4 bg-gray-200 rounded"></div>
+                <div className="w-24 h-3 bg-gray-200 rounded"></div>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
-    );
-  }
+    </div>
+  );
+}
+
 
   if (!product) {
     return (
