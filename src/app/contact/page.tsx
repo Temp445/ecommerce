@@ -1,158 +1,71 @@
-'use client';
+import { Mail, Phone, MapPin } from "lucide-react";
+import ContactForm from "@/Components/ContactPage/ContactForm";
 
-import { useState, FormEvent } from 'react';
-
-export default function ContactPage() {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    subject: '',
-    message: ''
-  });
-  const [loading, setLoading] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
-  };
-
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setLoading(true);
-    setSubmitStatus('idle');
-
-    try {
-      const response = await fetch('/api/contact', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      });
-
-      if (response.ok) {
-        setSubmitStatus('success');
-        setFormData({ name: '', email: '', subject: '', message: '' });
-      } else {
-        setSubmitStatus('error');
-      }
-    } catch (error) {
-      console.error('Error:', error);
-      setSubmitStatus('error');
-    } finally {
-      setLoading(false);
-    }
-  };
-
+const ContactPage = () => {
   return (
-    <div className="min-h-screen bg-white">
-      <section className="py-32 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-2xl mx-auto text-center">
-          <h1 className="text-5xl font-light text-black mb-4">
-            Get in touch
+    <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto">
+        <div className="text-center mb-12">
+          <h1 className="text-4xl font-bold text-gray-900 mb-4">
+            Get in Touch
           </h1>
-          <p className="text-lg text-gray-500">
-            We'd like to hear from you. Send us a message.
+          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+            Have questions about your order or need assistance? We're here to
+            help!
           </p>
         </div>
-      </section>
 
-      <section className="py-16 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-4xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-24">
-          <div className="space-y-12">
-            <div>
-              <p className="text-gray-400 text-sm mb-2">EMAIL</p>
-              <p className="text-black">hello@example.com</p>
-            </div>
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <div className="lg:col-span-1">
+            <div className="bg-white rounded-lg shadow-md p-6 sticky top-8">
+              <h2 className="text-2xl font-semibold text-gray-900 mb-6">
+                Contact Information
+              </h2>
 
-            <div>
-              <p className="text-gray-400 text-sm mb-2">PHONE</p>
-              <p className="text-black">+1 (555) 123-4567</p>
-            </div>
+              <div className="space-y-6">
+                <div className="flex items-start">
+                  <Mail className="w-6 h-6 text-gray-900 mt-1 mr-4 flex-shrink-0" />
+                  <div>
+                    <h3 className="font-semibold text-gray-900 mb-1">Email</h3>
+                    <p className="text-gray-600">support@gmail.com</p>
+                  </div>
+                </div>
 
-            <div>
-              <p className="text-gray-400 text-sm mb-2">ADDRESS</p>
-              <p className="text-black">123 Main Street<br />City, State 12345</p>
+                <div className="flex items-start">
+                  <Phone className="w-6 h-6 text-gray-900 mt-1 mr-4 flex-shrink-0" />
+                  <div>
+                    <h3 className="font-semibold text-gray-900 mb-1">Phone</h3>
+                    <p className="text-gray-600">+91 9876543210</p>
+                    <p className="text-sm text-gray-500 mt-1">
+                      Mon-Sat, 10am-6:30pm{" "}
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex items-start">
+                  <MapPin className="w-6 h-6 text-gray-900 mt-1 mr-4 flex-shrink-0" />
+                  <div>
+                    <h3 className="font-semibold text-gray-900 mb-1">
+                      Address
+                    </h3>
+                    <p className="text-gray-600">
+                      #306, 2nd Floor, NSIC-Software Technology Business Park,
+                      B-24, Guindy Industrial Estate, Ekkatuthangal,
+                      Chennai-600032, India
+                    </p>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
 
-          <div>
-            <form onSubmit={handleSubmit} className="space-y-6">
-              <div>
-                <input
-                  type="text"
-                  id="name"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleChange}
-                  required
-                  className="w-full px-0 py-2 bg-transparent border-b border-gray-300 text-black placeholder-gray-400 focus:outline-none focus:border-black transition text-sm"
-                  placeholder="Name"
-                />
-              </div>
-
-              <div>
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  required
-                  className="w-full px-0 py-2 bg-transparent border-b border-gray-300 text-black placeholder-gray-400 focus:outline-none focus:border-black transition text-sm"
-                  placeholder="Email"
-                />
-              </div>
-
-              <div>
-                <input
-                  type="text"
-                  id="subject"
-                  name="subject"
-                  value={formData.subject}
-                  onChange={handleChange}
-                  required
-                  className="w-full px-0 py-2 bg-transparent border-b border-gray-300 text-black placeholder-gray-400 focus:outline-none focus:border-black transition text-sm"
-                  placeholder="Subject"
-                />
-              </div>
-
-              <div>
-                <textarea
-                  id="message"
-                  name="message"
-                  value={formData.message}
-                  onChange={handleChange}
-                  required
-                  rows={4}
-                  className="w-full px-0 py-2 bg-transparent border-b border-gray-300 text-black placeholder-gray-400 focus:outline-none focus:border-black transition resize-none text-sm"
-                  placeholder="Message"
-                />
-              </div>
-
-              {submitStatus === 'success' && (
-                <p className="text-sm text-gray-600">Message sent successfully.</p>
-              )}
-
-              {submitStatus === 'error' && (
-                <p className="text-sm text-gray-600">Failed to send. Try again.</p>
-              )}
-
-              <button
-                type="submit"
-                disabled={loading}
-                className="text-sm font-light text-black hover:text-gray-600 disabled:text-gray-400 transition"
-              >
-                {loading ? 'Sending...' : 'Send'}
-              </button>
-            </form>
+          <div className="lg:col-span-2">
+            <ContactForm />
           </div>
         </div>
-      </section>
+      </div>
     </div>
   );
-}
+};
+
+export default ContactPage;

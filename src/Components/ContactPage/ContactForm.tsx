@@ -1,40 +1,33 @@
 "use client";
 
 import { useState } from "react";
-import { Send,User, Mail, Building2, Package, Phone } from "lucide-react";
+import { Send, User, Mail, Building2, Package, Phone, MessageSquare } from "lucide-react";
 import { FaWhatsapp } from "react-icons/fa";
 
-export default function RequestQuote() {
+const ContactForm = () => {
   const [formData, setFormData] = useState({
     name: "",
     company: "",
     product: "",
     contact: "",
+    email: "",
+    message: "",
   });
   const [isHovered, setIsHovered] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     alert("Quote request submitted!");
-    setFormData({ name: "", company: "", product: "", contact: "" });
+    setFormData({ name: "", company: "", product: "", contact: "", email: "", message: "" });
   };
 
   return (
-    <section className="relative  overflow-hidden">
-      <div className="relative max-w-2xl mx-auto">
-        <div className="text-center mb-5">
-          <h2 className="text-3xl font-bold mb-4 text-gray-900">
-            Request a Quote
-          </h2>
-          {/* <p className="text-gray-600 text-lg">
-            Fill out the form below and we'll get back to you within 24 hours
-          </p> */}
-        </div>
-
-        <div className="relative bg-white/80 backdrop-blur-lg p-8 rounded shadow-2xl border border-gray-500 transition-all duration-300 hover:shadow-3xl overflow-clip">
-          <div className="absolute top-0 right-0 w-32 h-32 bg-gray-900  rounded-bl-full"></div>
+    <section className="relative overflow-hidden">
+      <div className="relative  mx-auto">
+      
+        <div className="relative bg-white/80 backdrop-blur-lg p-8 rounded shadow-2xl border border-gray-200 transition-all duration-300 hover:shadow-3xl overflow-clip">
           
-          <div className="grid sm:grid-cols-1 gap-6 mb-6">
+          <div className="grid  gap-6 mb-6">
             <div className="relative group">
               <label className="block text-sm font-medium text-gray-700 mb-2">
                 Your Name *
@@ -77,7 +70,7 @@ export default function RequestQuote() {
             </label>
             <input
               type="text"
-              placeholder="Hydraulic Cyclinder"
+              placeholder="Hydraulic Cylinder"
               className="w-full p-4 pl-12 rounded-xl border-2 border-gray-200 focus:border-gray-500 focus:ring-4 focus:ring-gray-100 transition-all outline-none bg-white"
               required
               value={formData.product}
@@ -103,9 +96,9 @@ export default function RequestQuote() {
               }
             />
             <Phone className="absolute left-4 top-[46px] w-5 h-5 text-gray-400 group-focus-within:text-gray-500 transition-colors" />
-          </div> 
+          </div>
 
-              <div className="relative group mb-6">
+          <div className="relative group mb-6">
             <label className="block text-sm font-medium text-gray-700 mb-2">
               Email ID *
             </label>
@@ -114,12 +107,28 @@ export default function RequestQuote() {
               placeholder="Email Id"
               className="w-full p-4 pl-12 rounded-xl border-2 border-gray-200 focus:border-gray-500 focus:ring-4 focus:ring-gray-100 transition-all outline-none bg-white"
               required
-              value={formData.contact}
+              value={formData.email}
               onChange={(e) =>
-                setFormData({ ...formData, contact: e.target.value })
+                setFormData({ ...formData, email: e.target.value })
               }
             />
             <Mail className="absolute left-4 top-[46px] w-5 h-5 text-gray-400 group-focus-within:text-gray-500 transition-colors" />
+          </div>
+
+          <div className="relative group mb-6">
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Message
+            </label>
+            <textarea
+              placeholder="Enter your message..."
+              className="w-full p-4 pl-12 rounded-xl border-2 border-gray-200 focus:border-gray-500 focus:ring-4 focus:ring-gray-100 transition-all outline-none bg-white resize-none"
+              rows={4}
+              value={formData.message}
+              onChange={(e) =>
+                setFormData({ ...formData, message: e.target.value })
+              }
+            />
+            <MessageSquare className="absolute left-4 top-[46px] w-5 h-5 text-gray-400 group-focus-within:text-gray-500 transition-colors" />
           </div>
 
           <button
@@ -133,11 +142,10 @@ export default function RequestQuote() {
             <Send className={`w-5 h-5 transition-transform duration-300 ${isHovered ? 'translate-x-1' : ''}`} />
           </button>
 
-
           <div className="mt-6 text-center">
             <p className="text-gray-600 mb-3">or reach us instantly on</p>
             <a
-              href="https://wa.me/your-number"
+              href="https://wa.me/7339139431"
               className="inline-flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-full font-medium shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300"
             >
               <FaWhatsapp className="text-white text-2xl" />
@@ -145,9 +153,9 @@ export default function RequestQuote() {
             </a>
           </div>
         </div>
-
-      
       </div>
     </section>
   );
 }
+
+export default ContactForm

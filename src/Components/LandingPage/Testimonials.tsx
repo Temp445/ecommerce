@@ -39,7 +39,7 @@ export default function Testimonials() {
         <span className="text- font-semibold text-sm uppercase tracking-wider mb-2 block">
           Testimonials
         </span>
-        <h2 className=" text-2xl md:text-4xl font-semibold mb-4 text-gray-900">
+        <h2 className=" text-2xl md:text-4xl font-medium mb-4 text-gray-900">
           What Our Clients Say
         </h2>
         <p className="text-gray-600 max-w-2xl mx-auto">
@@ -88,7 +88,7 @@ export default function Testimonials() {
                 {t.userName.charAt(0)}
               </div>
               <div>
-                <h4 className="font-bold text-gray-900">{t.userName}</h4>
+                <h4 className="font-medium text-gray-900">{t.userName}</h4>
                 <p className="text-sm text-gray-500">{t.userRole}</p>
               </div>
             </div>

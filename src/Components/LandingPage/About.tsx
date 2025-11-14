@@ -19,12 +19,12 @@ const About = () => {
       <div className="relative container mx-auto px-6 md:px-12 lg:px-20 flex flex-col md:items-start items-center text-left max-w-4xl">
         <div className="w-24 h-1 bg-yellow-500 mb-6 md:mb-8"></div>
 
-        <h2 className="text-4xl md:text-6xl font-extrabold leading-tight mb-6 drop-shadow-lg">
+        <h2 className="text-2xl md:text-6xl font-extrabold leading-tight mb-6 drop-shadow-lg">
           Driving Industry Forward with
-          <br /> <span className="text-yellow-500">Hydraulic Excellence</span>
+          <br  className='hidden md:block'/> <span className="text-yellow-500">Hydraulic Excellence</span>
         </h2>
 
-        <p className="text-gray-300 text-lg md:text-xl leading-relaxed mb-10 max-w-2xl">
+        <p className="text-gray-300  md:text-xl leading-relaxed mb-10 max-w-2xl">
           At <span className="font-semibold text-yellow-500">ACE Hydraulics</span>, we
           engineer powerful and reliable hydraulic systems built for modern
           industries. With precision CNC technology and ISO-certified standards,
@@ -33,7 +33,7 @@ const About = () => {
 
         <Link
           href="/about"
-          className="inline-block bg-white text-gray-950 font-semibold px-10 py-3 rounded-full transition-transform duration-300 hover:scale-105 hover:bg-yellow-500 shadow-lg"
+          className="inline-block bg-white text-gray-950 font-medium px-4  py-2 md:px-10 md:py-3 rounded-full transition-transform duration-300 hover:scale-105 hover:bg-yellow-500 shadow-lg"
         >
           Learn More
         </Link>

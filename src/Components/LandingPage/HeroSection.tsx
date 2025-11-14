@@ -55,11 +55,11 @@ const HeroSection = () => {
     <div className="min-h-fit bg-white overflow-hidden container mx-auto">
       <div className="relative h-fit flex flex-col md:flex-row items-center overflow-hidden">
         <div className=" md:w-1/2 flex flex-col justify-between p-4 xl:p-6 2xl:p-14 order-2 md:order-1">
-          <div className="mb-20 mt-5 md:mt-10">
-            <h1 className=" text-4xl xl:text-6xl 2xl:text-7xl mb-2 text-gray-900  leading-tight transition-all duration-500">
+          <div className="mb-10 md:mb-20 mt-5 md:mt-10">
+            <h1 className=" text-3xl md:text-4xl xl:text-6xl 2xl:text-7xl mb-2 text-gray-900  leading-tight transition-all duration-500">
               High-Pressure
             </h1>
-            <h2 className="text-gray-500 mb-8 text-4xl xl:text-6xl 2xl:7xl ">
+            <h2 className="text-gray-500 mb-8 text-3xl md:text-4xl xl:text-6xl 2xl:7xl ">
               Hydraulic Solutions
             </h2>
 

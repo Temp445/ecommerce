@@ -15,11 +15,8 @@ const WhyChooseUsSection = () => {
               Three decades of engineering excellence, delivered with precision and trust.
             </p>
             
-            <div className="grid grid-cols-3 gap-8">
-              <div>
-                <p className="text-3xl font-light text-gray-900">28+</p>
-                <p className="text-sm text-gray-500 mt-1">Years</p>
-              </div>
+            <div className="flex gap-10">
+              
               <div>
                 <p className="text-3xl font-light text-gray-900">500+</p>
                 <p className="text-sm text-gray-500 mt-1">Clients</p>

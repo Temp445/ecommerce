@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { File } from 'lucide-react';
 
 interface Blog {
   _id: string;
@@ -45,7 +46,7 @@ const BlogPage = () => {
                 Knowledge Base
               </p>
               <h1 className="text-2xl md:text-4xl  text-white">
-                Technical Blog
+                Hydraulic Insights
               </h1>
             </div>
           </div>
@@ -78,19 +79,7 @@ const BlogPage = () => {
         ) : blogs.length === 0 ? (
           <div className="text-center py-20 border-2 border-dashed border-gray-300">
             <div className="inline-flex items-center justify-center w-20 h-20 bg-slate-100 mb-4">
-              <svg
-                className="w-10 h-10 text-slate-400"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
-                />
-              </svg>
+              <File  className="w-8 h-8 text-gray-700"/>
             </div>
             <h3 className="text-xl font-bold text-gray-900 mb-2">
               No Articles Available

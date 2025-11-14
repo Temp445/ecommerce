@@ -13,9 +13,16 @@ export default function ProductCard({
 }) {
   const router = useRouter();
 
-  const discountPercentage = product.discountPrice > 0 
-    ? Math.round(((product.price - product.discountPrice) / product.price) * 100)
-    : 0;
+  const discountPercentage =
+    product.discountPrice > 0
+      ? Math.round(
+          ((product.price - product.discountPrice) / product.price) * 100
+        )
+      : 0;
+
+  const handleNavigate = () => {
+    router.push(`/products/${product.pathUrl}`);
+  };
 
   return (
     <div
@@ -24,7 +31,7 @@ export default function ProductCard({
       }`}
     >
       <div
-        onClick={() => router.push(`/products/${product.pathUrl}`)}
+        onClick={handleNavigate}
         className={`relative bg-slate-50 cursor-pointer overflow-hidden ${
           viewMode === "list" ? "w-64 flex-shrink-0" : "w-full"
         }`}
@@ -34,9 +41,13 @@ export default function ProductCard({
             {discountPercentage}% OFF
           </span>
         )}
-        <span className="absolute top-3 right-2  pr-2 text-red-500 z-10">{product.stock === 0 ? "Out of stock" : "" }</span>
 
-        {product.thumbnail ? (
+        {product.stock === 0 && (
+          <span className="absolute top-3 right-2 pr-2 text-red-500 z-10">
+            Out of stock
+          </span>
+        )}
+
           <img
             src={product.thumbnail || product.images?.[0]}
             alt={product.name}
@@ -44,30 +55,12 @@ export default function ProductCard({
               viewMode === "list" ? "h-80" : "h-72"
             }`}
           />
-        ) : (
-          <div className={`flex items-center justify-center bg-white ${
-            viewMode === "list" ? "h-full" : "h-72"
-          }`}>
-            <svg 
-              className="w-16 h-16 text-slate-300" 
-              fill="none" 
-              stroke="currentColor" 
-              viewBox="0 0 24 24"
-            >
-              <path 
-                strokeLinecap="round" 
-                strokeLinejoin="round" 
-                strokeWidth={1.5} 
-                d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" 
-              />
-            </svg>
-          </div>
-        )}
+      
       </div>
 
       <div className={`p-6 flex flex-col ${viewMode === "list" ? "flex-1" : ""}`}>
         <h2
-          onClick={() => router.push(`/products/${product.pathUrl}`)}
+          onClick={handleNavigate}
           className="text-lg font-medium text-slate-800 mb-2 cursor-pointer hover:text-gray-900 transition line-clamp-2 leading-snug"
         >
           {product.name}
@@ -82,23 +75,27 @@ export default function ProductCard({
             <p className="text-xl md:text-2xl font-medium text-slate-900">
               ₹{(product.discountPrice || product.price)?.toLocaleString()}
             </p>
+
             {product.discountPrice > 0 && (
-              <p className="text-base text-slate-400 line-through">
-                ₹{product.price?.toLocaleString()}
-              </p>
+              <>
+                <p className="text-base text-slate-400 line-through">
+                  ₹{product.price?.toLocaleString()}
+                </p>
+                <p className="text-xs text-emerald-600 font-medium">
+                  You save ₹
+                  {(product.price - product.discountPrice)?.toLocaleString()}
+                </p>
+              </>
             )}
-                {product.discountPrice > 0 && (
-            <p className="text-xs text-emerald-600 font-medium">
-              You save ₹{(product.price - product.discountPrice)?.toLocaleString()}
-            </p>
-          )}
           </div>
-      
         </div>
 
-        <AddToCartButton product={product} userId={userId}  disabled={product.stock <= 0} className={`text-white bg-gray-900 hover:bg-gray-950 transition disabled:opacity-50 ${
-    product.stock <= 0 ? "cursor-not-allowed opacity-60" : ""
-  }`} />
+        <AddToCartButton
+          product={product}
+          userId={userId}
+          disabled={product.stock <= 0}
+          className={`text-white bg-gray-900 hover:bg-gray-950 transition disabled:opacity-50 disabled:cursor-not-allowed`}
+        />
       </div>
     </div>
   );

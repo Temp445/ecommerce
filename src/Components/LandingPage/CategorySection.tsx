@@ -26,10 +26,10 @@ const CategorySection = () => {
   }, []);
 
   return (
-    <section className="py-20 bg-gray-900">
+    <section className=" py-5 md:py-20 bg-gray-900">
       <div className="container mx-auto px-4 2xl:px-8">
-        <div className="mb-16">
-          <h2 className="text-3xl md:text-4xl font-light text-white mb-2">
+        <div className=" mb-5 md:mb-16">
+          <h2 className="text-2xl md:text-4xl font-light text-white mb-2">
             Shop by Category
           </h2>
           <div className="w-12 h-1 bg-white mt-4"></div>

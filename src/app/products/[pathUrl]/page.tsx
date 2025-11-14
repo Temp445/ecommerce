@@ -208,7 +208,7 @@ const ProductDetailPage = () => {
                 )}
               </div>
 
-              <h1 className="text-2xl 2xl:text-4xl font-light text-neutral-900 mb-6 leading-tight tracking-tight">
+              <h1 className="text-xl 2xl:text-4xl font-light text-neutral-900 mb-6 leading-tight tracking-tight">
                 {product.name}
               </h1>
 
@@ -220,12 +220,12 @@ const ProductDetailPage = () => {
 
               <div className="mb-8 pb-8 border-b border-neutral-200">
                 <div className="flex items-baseline gap-4 mb-2">
-                  <span className="text-2xl 2xl:text-3xl font-light text-neutral-900 font-sans">
+                  <span className="text-xl 2xl:text-3xl font-light text-neutral-900 font-sans">
                     ₹
                     {(product.discountPrice || product.price)?.toLocaleString()}
                   </span>
                   {product.discountPrice > 0 && (
-                    <span className="text-lg text-neutral-400 line-through font-sans">
+                    <span className=" md:text-lg text-neutral-400 line-through font-sans">
                       ₹{product.price?.toLocaleString()}
                     </span>
                   )}
@@ -244,7 +244,7 @@ const ProductDetailPage = () => {
                     Availability
                   </div>
                   <div
-                    className={`text-sm font-medium ${
+                    className={`text-xs md:text-sm font-medium ${
                       product.stock > 10 ? "text-neutral-900" : "text-red-600"
                     }`}
                   >
@@ -260,7 +260,7 @@ const ProductDetailPage = () => {
                   <div className="text-xs uppercase tracking-widest text-neutral-500 mb-2">
                     Delivery
                   </div>
-                  <div className="text-sm font-medium text-neutral-900">
+                  <div className="text-xs md:text-sm font-medium text-neutral-900">
                     {(() => {
                       const date = new Date();
                       date.setDate(date.getDate() + 7);
@@ -333,20 +333,20 @@ const ProductDetailPage = () => {
           </div>
         </div>
 
-        <div className=" mt-14 md:mt-24 grid lg:grid-cols-12 gap-16">
+        <div className=" mt-10 md:mt-24 grid lg:grid-cols-12 gap-10 md:gap-16">
           <div className="lg:col-span-7">
-            <h2 className="text-2xl font-light text-neutral-900 mb-6 tracking-tight">
+            <h2 className="text-xl md:text-2xl font-light text-neutral-900 mb-6 tracking-tight">
               Product Details
             </h2>
             <div className="prose prose-neutral max-w-none">
-              <p className="text-neutral-700 leading-relaxed whitespace-pre-line">
+              <p className="text-neutral-700 text-sm md:text-base leading-relaxed whitespace-pre-line">
                 {product.description}
               </p>
             </div>
 
             {product.benefits && product.benefits.length > 0 && (
-              <div className="mt-12">
-                <h3 className="text-xl font-light text-neutral-900 mb-6 tracking-tight">
+              <div className="mt-10 md:mt-12">
+                <h3 className="text-xl md:text-2xl font-light text-neutral-900 mb-6 tracking-tight">
                   Key Features
                 </h3>
                 <div className="space-y-6">
@@ -372,7 +372,7 @@ const ProductDetailPage = () => {
           </div>
 
           <div className="lg:col-span-5">
-            <h2 className="text-2xl font-light text-neutral-900 mb-6 tracking-tight">
+            <h2 className="text-xl md:text-2xl font-light text-neutral-900 mb-6 tracking-tight">
               Specifications
             </h2>
 
@@ -415,7 +415,7 @@ const ProductDetailPage = () => {
               )}
             </div>
 
-            <div className="mt-12 pt-8 border-t border-gray-200">
+            <div className="mt-12 md:pt-8 md:border-t border-gray-200">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 text-sm text-gray-700">
                 <div className="flex items-start gap-3">
                   <Shield size={22} className="text-gray-800 mt-0.5" />

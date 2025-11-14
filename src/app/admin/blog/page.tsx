@@ -108,15 +108,15 @@ const BlogListPage = () => {
               )}
 
               <div className="p-4">
-                <h2 className="text-lg font-semibold mb-1 line-clamp-1 text-gray-800">
+                <h2 className="text-base font-medium mb-1 line-clamp-2 text-gray-800">
                   {blog.title}
                 </h2>
-                <p className="text-sm text-gray-500">
+                <p className="text-sm text-gray-500 line-clamp-3">
                  {blog.shortDescription}
                 </p>
               </div>
 
-              <div className="flex justify-end p-4 gap-2 mt-3">
+              <div className="flex justify-end p-4 gap-2 ">
                 <Link
                   href={`/admin/blog/update/${blog.slug}`}
                   className="p-2 rounded-md bg-green-100 hover:bg-green-200 transition"

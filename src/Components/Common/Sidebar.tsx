@@ -8,11 +8,11 @@ import {
   Users,
   Package,
   Folder,
-  Settings,
   Menu,
   X,
   ListTodo,
-  UserStar
+  UserStar,
+  NotepadText,
 } from "lucide-react";
 
 const Sidebar = () => {
@@ -22,11 +22,11 @@ const Sidebar = () => {
   const menuItems = [
     { name: "Products", href: "/admin/product", icon: Package },
     { name: "Categories", href: "/admin/category", icon: Folder },
-    { name: "Orders", href: "/admin/orders", icon: ListTodo  },
+    { name: "Orders", href: "/admin/orders", icon: ListTodo },
     { name: "Users", href: "/admin/users", icon: Users },
     { name: "Applications", href: "/admin/application", icon: LayoutDashboard },
     { name: "Testimonials", href: "/admin/testimonial", icon: UserStar },
-    { name: "blog", href: "/admin/blog", icon: UserStar },
+    { name: "blog", href: "/admin/blog", icon: NotepadText },
   ];
 
   return (
@@ -37,8 +37,6 @@ const Sidebar = () => {
           {isOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
       </div>
-
-      
 
       <aside
         className={`absolute md:sticky md:top-0 left-0 h-full md:h-[100vh] w-64 bg-gray-900 text-gray-100 z-40 transform transition-transform duration-300 ease-in-out
@@ -64,9 +62,10 @@ const Sidebar = () => {
                   <Link
                     href={item.href}
                     className={`flex items-center gap-3 px-6 py-3 text-sm font-medium transition-all duration-150
-                      ${active
-                        ? "bg-gray-800 text-white"
-                        : "text-gray-400 hover:bg-gray-800 hover:text-white"
+                      ${
+                        active
+                          ? "bg-gray-800 text-white"
+                          : "text-gray-400 hover:bg-gray-800 hover:text-white"
                       }`}
                     onClick={() => setIsOpen(false)}
                   >

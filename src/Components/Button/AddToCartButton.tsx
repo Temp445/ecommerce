@@ -91,7 +91,7 @@ const AddToCartButton = ({
   return (
     <button
       onClick={handleAddToCart}
-      disabled={loading}
+      disabled={loading || disabled}
       className={`flex items-center justify-center gap-2  px-4 py-2 rounded w-full ${className}`}
     >
       {loading ? (

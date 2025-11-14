@@ -51,7 +51,7 @@ export default function RelatedProducts({
 
   return (
     <div className="mt-16">
-      <h2 className="text-2xl mb-6 text-gray-800">
+      <h2 className="text-xl md:text-2xl mb-6 text-gray-800">
         Related Products
       </h2>
       <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 gap-6">

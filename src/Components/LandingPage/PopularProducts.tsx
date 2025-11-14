@@ -88,8 +88,14 @@ const PopularProducts = () => {
                   />
                 </Link>
 
+                      {product.stock === 0 && (
+          <span className="absolute top-3 right-2 pr-2 text-red-500 z-10">
+            Out of stock
+          </span>
+        )}
+
                 <div className="p-4">
-                  <h3 className="font-semibold text-lg text-gray-800 mb-1 line-clamp-2">
+                  <h3 className="font-medium md:text-lg text-gray-800 mb-1 line-clamp-2">
                     {product.name}
                   </h3>
                   <p className="text-gray-600 text-sm mb-2 line-clamp-2">
@@ -114,7 +120,8 @@ const PopularProducts = () => {
                       <AddToCartButton
                         product={product}
                         userId={user?._id}
-                        className="text-white bg-gray-900 hover:bg-gray-950 transition disabled:opacity-50"
+                        disabled={product.stock <= 0}
+                        className="text-white bg-gray-900 hover:bg-gray-950 transition disabled:opacity-50 disabled:cursor-not-allowed"
                       />
                     </div>
                   </div>

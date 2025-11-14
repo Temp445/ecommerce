@@ -8,6 +8,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useAuth } from "@/context/AuthProvider";
 import FiltersSidebar from "@/Components/ProductPage/FiltersSidebar";
 import ProductCard from "@/Components/ProductPage/ProductCard";
+import Pagination from "@/Components/Common/Pagination"; 
 
 const ProductsClient = () => {
   const [products, setProducts] = useState<any[]>([]);
@@ -15,11 +16,13 @@ const ProductsClient = () => {
   const [loading, setLoading] = useState(true);
 
   const [showFilters, setShowFilters] = useState(false);
-
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [priceRange, setPriceRange] = useState<[number, number]>([0, 100000]);
   const [sortBy, setSortBy] = useState("featured");
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 12; 
 
   const { user } = useAuth();
   const router = useRouter();
@@ -36,6 +39,7 @@ const ProductsClient = () => {
 
   useEffect(() => {
     applyFilters();
+    setCurrentPage(1); 
   }, [products, selectedCategories, priceRange, sortBy]);
 
   const fetchProducts = async () => {
@@ -100,7 +104,12 @@ const ProductsClient = () => {
     ).values()
   );
 
- if (loading) {
+  const totalItems = filteredProducts.length;
+  const lastIndex = currentPage * itemsPerPage;
+  const firstIndex = lastIndex - itemsPerPage;
+  const paginatedProducts = filteredProducts.slice(firstIndex, lastIndex);
+
+  if (loading) {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-slate-50">
       <div className="container mx-auto px-3 sm:px-6 py-8">
@@ -152,7 +161,6 @@ const ProductsClient = () => {
     </div>
   );
 }
-
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-slate-50">
@@ -217,7 +225,7 @@ const ProductsClient = () => {
                   : "space-y-4"
               }
             >
-              {filteredProducts.length === 0 ? (
+              {paginatedProducts.length === 0 ? (
                 <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-12 text-center">
                   <div className="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-4">
                     <Search className="text-slate-400" size={32} />
@@ -236,7 +244,7 @@ const ProductsClient = () => {
                   </button>
                 </div>
               ) : (
-                filteredProducts.map((product) => (
+                paginatedProducts.map((product) => (
                   <ProductCard
                     key={product._id || product.id}
                     product={product}
@@ -246,11 +254,20 @@ const ProductsClient = () => {
                 ))
               )}
             </div>
+
+            {totalItems > itemsPerPage && (
+              <Pagination
+                currentPage={currentPage}
+                totalItems={totalItems}
+                itemsPerPage={itemsPerPage}
+                onPageChange={(page) => setCurrentPage(page)}
+              />
+            )}
           </main>
         </div>
       </div>
     </div>
   );
-}
+};
 
 export default ProductsClient;
