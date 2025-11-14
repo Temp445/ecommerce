@@ -19,19 +19,18 @@ export async function GET(
 }
 
 
-export async function PUT(req: Request, { params }: { params: { slug: string } }) {
+export async function PUT(req: Request, { params }: { params: Promise <{ slug: string }> }) {
   try {
     await dbConnect();
-    const { slug } = params;
+    const { slug } = await params;
     const formData = await req.formData();
 
     const title = formData.get("title") as string;
     const shortDescription = formData.get("shortDescription") as string;
     const content = formData.get("content") as string;
-    const newSlug = formData.get("newSlug") as string; // updated slug
+    const newSlug = formData.get("newSlug") as string; 
     const file = formData.get("file") as File | null;
 
-    // find existing blog by old slug
     const existingBlog = await Blog.findOne({ slug });
     if (!existingBlog) {
       return NextResponse.json(
@@ -42,7 +41,6 @@ export async function PUT(req: Request, { params }: { params: { slug: string } }
 
     let imageUrl = existingBlog.imageUrl;
 
-    // upload image if new one selected
     if (file) {
       const arrayBuffer = await file.arrayBuffer();
       const buffer = Buffer.from(arrayBuffer);
@@ -61,7 +59,6 @@ export async function PUT(req: Request, { params }: { params: { slug: string } }
       imageUrl = uploadResponse.secure_url;
     }
 
-    // update fields
     existingBlog.title = title;
     existingBlog.shortDescription = shortDescription;
     existingBlog.content = content;
