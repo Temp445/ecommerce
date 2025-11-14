@@ -1,34 +1,32 @@
 "use client";
 
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
 import dynamic from "next/dynamic";
+import toast from "react-hot-toast";
 import "react-quill-new/dist/quill.snow.css";
+import { useRouter } from "next/navigation";
 
-// Dynamically import Quill to prevent SSR errors
 const ReactQuill = dynamic(() => import("react-quill-new"), { ssr: false });
 
-export default function BlogAdminPage() {
+const UploadBlogPage = () => {
   const [title, setTitle] = useState("");
   const [slug, setSlug] = useState("");
   const [shortDescription, setShortDescription] = useState("");
   const [content, setContent] = useState("");
-  const [author, setAuthor] = useState("Admin");
   const [image, setImage] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState("");
-  const quillRef = useRef<any>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const Router = useRouter()
 
-  // ✅ Quill modules configuration
   const modules = {
-    toolbar: {
-      container: [
-        [{ header: [1, 2, 3, false] }],
-        ["bold", "italic", "underline", "strike"],
-        [{ list: "ordered" }, { list: "bullet" }],
-        ["blockquote", "code-block"],
-        ["link", "image"],
-        ["clean"],
-      ],
-    },
+    toolbar: [
+      [{ header: [1, 2, 3, false] }],
+      ["bold", "italic", "underline", "strike"],
+      [{ list: "ordered" }, { list: "bullet" }],
+      ["blockquote", "code-block"],
+      ["link", "image"],
+      ["clean"],
+    ],
   };
 
   const formats = [
@@ -40,29 +38,29 @@ export default function BlogAdminPage() {
     "blockquote",
     "code-block",
     "list",
-    "bullet",
+    // "bullet",
     "link",
     "image",
   ];
 
-  // ✅ Handle form submission
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!title || !content) {
-      alert("Please fill in all required fields!");
+    if (!title || !shortDescription || !content || !image) {
+      toast.error("Please fill in all required fields.");
       return;
     }
 
-    const formData = new FormData();
-    formData.append("title", title);
-    formData.append("slug", slug);
-    formData.append("shortDescription", shortDescription);
-    formData.append("content", content);
-    formData.append("author", author);
-    if (image) formData.append("file", image);
-
     try {
+      setIsSubmitting(true);
+
+      const formData = new FormData();
+      formData.append("title", title);
+      formData.append("slug", slug);
+      formData.append("shortDescription", shortDescription);
+      formData.append("content", content);
+      if (image) formData.append("file", image);
+
       const res = await fetch("/api/blog", {
         method: "POST",
         body: formData,
@@ -71,7 +69,8 @@ export default function BlogAdminPage() {
       const data = await res.json();
 
       if (data.success) {
-        alert("✅ Blog Created Successfully!");
+        toast.success("Blog created successfully!");
+        Router.push("/admin/blog")
         setTitle("");
         setSlug("");
         setShortDescription("");
@@ -79,53 +78,72 @@ export default function BlogAdminPage() {
         setImage(null);
         setPreviewUrl("");
       } else {
-        alert("❌ Failed to create blog!");
+        toast.error(data.message || "Failed to create blog.");
       }
-    } catch (error) {
-      console.error("Error creating blog:", error);
-      alert("❌ Something went wrong!");
+    } catch (err) {
+      console.error("Error creating blog:", err);
+      toast.error("Something went wrong.");
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
   return (
-    <div className="max-w-5xl mx-auto p-6 space-y-6">
-      <h1 className="text-3xl font-semibold mb-6">📝 Create New Blog</h1>
+    <div className="max-w-5xl mx-auto p-6 space-y-8">
+      <h1 className="text-3xl font-medium text-gray-800 mb-4">
+        Create New Blog
+      </h1>
 
-      <form onSubmit={handleSubmit} className="space-y-6">
-        {/* Title */}
+      <form
+        onSubmit={handleSubmit}
+        className="bg-white shadow-md rounded-2xl p-6 space-y-6"
+      >
         <div>
-          <label className="block text-gray-700 font-medium mb-2">Title</label>
+          <label className="block text-gray-700 font-medium mb-2">
+            Blog Title *
+          </label>
           <input
             type="text"
-            className="border p-2 w-full rounded"
+            className="border border-gray-300 p-3 w-full rounded-lg focus:outline-none"
             placeholder="Enter blog title"
             value={title}
             onChange={(e) => {
-              setTitle(e.target.value);
-              setSlug(e.target.value.toLowerCase().replace(/\s+/g, "-"));
+              const val = e.target.value;
+              setTitle(val);
+              setSlug(val.toLowerCase().trim().replace(/\s+/g, "-"));
             }}
             required
           />
         </div>
 
-        {/* Short Description */}
+        <div className="hidden">
+          <label className="text-gray-700 font-medium mb-2">
+            Slug 
+          </label>
+          <input
+            type="text"
+            className="border border-gray-300 p-3 w-full rounded-lg bg-gray-50"
+            value={slug}
+            readOnly
+          />
+        </div>
+
         <div>
           <label className="block text-gray-700 font-medium mb-2">
-            Short Description
+            Short Description *
           </label>
           <textarea
-            className="border p-2 w-full rounded min-h-[100px]"
-            placeholder="Enter a short summary of the blog..."
+            className="border border-gray-300 p-3 w-full rounded-lg focus:outline-none min-h-[100px]"
+            placeholder="Enter a short summary..."
             value={shortDescription}
             onChange={(e) => setShortDescription(e.target.value)}
             required
           />
         </div>
 
-        {/* Cover Image */}
         <div>
           <label className="block text-gray-700 font-medium mb-2">
-            Cover Image
+            Cover Image *
           </label>
           <input
             type="file"
@@ -137,40 +155,42 @@ export default function BlogAdminPage() {
                 setPreviewUrl(URL.createObjectURL(file));
               }
             }}
+            className="block w-full text-sm text-gray-600"
           />
           {previewUrl && (
             <img
               src={previewUrl}
               alt="Preview"
-              className="w-48 h-32 object-cover mt-3 rounded-lg shadow-md border"
+              className="w-48 h-32 object-cover mt-3 rounded-lg shadow border"
             />
           )}
         </div>
 
-        {/* Content Editor */}
         <div>
           <label className="block text-gray-700 font-medium mb-2">
-            Blog Content
+            Blog Content *
           </label>
           <ReactQuill
-            // ref={quillRef}
             theme="snow"
             value={content}
             onChange={setContent}
             modules={modules}
             formats={formats}
-            className="min-h-[300px] bg-white rounded-lg border"
+            style={{ height: "400px" }}
+            className=" bg-white rounded-lg"
           />
         </div>
 
-        {/* Submit */}
         <button
           type="submit"
-          className="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition"
+          disabled={isSubmitting}
+          className="px-6 py-3 rounded-lg font-medium text-white bg-emerald-600 mt-10"
         >
-          Publish Blog
+          {isSubmitting ? "Uploading..." : "Upload Blog"}
         </button>
       </form>
     </div>
   );
 }
+
+export default UploadBlogPage

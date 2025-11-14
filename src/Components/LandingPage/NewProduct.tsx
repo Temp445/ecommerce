@@ -140,7 +140,7 @@ export default function NewProduct() {
         )}
         {loading && (
           <div className="grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 gap-6">
-            {[...Array(4)].map((_, index) => (
+            {[...Array(6)].map((_, index) => (
               <div
                 key={index}
                 className="flex bg-white rounded-sm border border-gray-200 hover:border-slate-700 transition-all duration-300 overflow-hidden"

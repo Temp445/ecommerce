@@ -1,12 +1,11 @@
 import mongoose, { model, models } from "mongoose";
 
 const BlogSchema = new mongoose.Schema({
-  title: String,
+  title: {type: String, required: true},
   slug: { type: String, unique: true },
-  shortDescription: String,
-  imageUrl: String,
+  shortDescription: {type: String,required: true},
+  imageUrl: {type: String, required: true},
   content: String,
-  author: String,
   createdAt: { type: Date, default: Date.now },
 });
 

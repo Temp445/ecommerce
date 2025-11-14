@@ -18,22 +18,31 @@ export async function GET(
     }
 }
 
-export async function PUT(
-  req: Request,
-  { params }: { params: Promise <{ slug: string }> }
-) {
+
+export async function PUT(req: Request, { params }: { params: { slug: string } }) {
   try {
     await dbConnect();
-    const { slug } = await params;
+    const { slug } = params;
     const formData = await req.formData();
 
     const title = formData.get("title") as string;
     const shortDescription = formData.get("shortDescription") as string;
     const content = formData.get("content") as string;
-    const author = formData.get("author") as string;
+    const newSlug = formData.get("newSlug") as string; // updated slug
     const file = formData.get("file") as File | null;
 
-    let imageUrl = "";
+    // find existing blog by old slug
+    const existingBlog = await Blog.findOne({ slug });
+    if (!existingBlog) {
+      return NextResponse.json(
+        { success: false, message: "Blog not found" },
+        { status: 404 }
+      );
+    }
+
+    let imageUrl = existingBlog.imageUrl;
+
+    // upload image if new one selected
     if (file) {
       const arrayBuffer = await file.arrayBuffer();
       const buffer = Buffer.from(arrayBuffer);
@@ -52,27 +61,30 @@ export async function PUT(
       imageUrl = uploadResponse.secure_url;
     }
 
-    const updatedBlog = await Blog.findOneAndUpdate(
-      { slug },
-      {
-        title,
-        shortDescription,
-        content,
-        author,
-        ...(imageUrl && { imageUrl }),
-      },
-      { new: true }
-    );
+    // update fields
+    existingBlog.title = title;
+    existingBlog.shortDescription = shortDescription;
+    existingBlog.content = content;
+    existingBlog.slug = newSlug;
+    existingBlog.imageUrl = imageUrl;
 
-    if (!updatedBlog)
-      return NextResponse.json({ success: false, message: "Not found" }, { status: 404 });
+    await existingBlog.save();
 
-    return NextResponse.json({ success: true, data: updatedBlog });
+    return NextResponse.json({
+      success: true,
+      message: "Blog updated successfully",
+      data: existingBlog,
+    });
   } catch (error) {
     console.error("Error updating blog:", error);
-    return NextResponse.json({ success: false, message: "Update failed" }, { status: 500 });
+    return NextResponse.json(
+      { success: false, message: "Internal Server Error" },
+      { status: 500 }
+    );
   }
 }
+
+
 
 export async function DELETE(
   req: Request,

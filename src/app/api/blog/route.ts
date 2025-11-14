@@ -25,8 +25,14 @@ export async function POST(req: Request) {
     const slug = formData.get("slug") as string;
     const shortDescription = formData.get("shortDescription") as string;
     const content = formData.get("content") as string;
-    const author = formData.get("author") as string;
     const file = formData.get("file") as File | null;
+
+     if (!title || !slug || !shortDescription || !file) {
+      return NextResponse.json(
+        { success: false, message: "Missing required fields" },
+        { status: 400 }
+      );
+    }
 
     let imageUrl = "";
     if (file) {
@@ -52,7 +58,6 @@ export async function POST(req: Request) {
       slug,
       shortDescription,
       content,
-      author,
       imageUrl,
     });
 

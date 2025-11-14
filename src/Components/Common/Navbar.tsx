@@ -52,7 +52,7 @@ const Navbar = () => {
 
   const allLinks =
     user?.role === "admin"
-      ? [...navLinks, { href: "/admin", label: "Dashboard" }]
+      ? [...navLinks, { href: "/admin/product", label: "Dashboard" }]
       : navLinks;
 
   return (

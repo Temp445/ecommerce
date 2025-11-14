@@ -1,37 +1,35 @@
 'use client'
 
-import React from "react";
-import Image from "next/image";
-import hydraulic from "@/assets/product1.png"
+import React,{useEffect, useState} from "react";
+import Link from "next/link";
 
-const categories = [
-  {
-    name: "Hydraulic Cylinders",
-    image: hydraulic,
-    link: "/products/cylinders",
-    applications: "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ab iste praesentium libero ipsum beatae corrupti sequi. Corrupti nisi pariatur ratione ex exercitationem deleniti enim earum commodi! Voluptatem facilis iste quae?",
-  },
-  {
-    name: "Hydraulic Pumps",
-    image: hydraulic,
-    link: "/products/pumps",
-    applications: "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ab iste praesentium libero ipsum beatae corrupti sequi. Corrupti nisi pariatur ratione ex exercitationem deleniti enim earum commodi! Voluptatem facilis iste quae?",
-  },
-  {
-    name: "Hydraulic Valves",
-    image: hydraulic,
-    link: "/products/valves",
-    applications: "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ab iste praesentium libero ipsum beatae corrupti sequi. Corrupti nisi pariatur ratione ex exercitationem deleniti enim earum commodi! Voluptatem facilis iste quae?",
-  },
-  {
-    name: "Accessories",
-    image: hydraulic,
-    link: "/products/accessories",
-    applications: "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ab iste praesentium libero ipsum beatae corrupti sequi. Corrupti nisi pariatur ratione ex exercitationem deleniti enim earum commodi! Voluptatem facilis iste quae?",
-  }
-];
+interface Blog {
+  _id: string;
+  title: string;
+  slug: string;
+  shortDescription: string;
+  imageUrl: string;
+}
 
 export default function BlogSection() {
+
+   const [blogs, setBlogs] = useState<Blog[]>([]);
+
+   useEffect(() => {
+      const fetchBlogs = async () => {
+        try {
+          const res = await fetch("/api/blog");
+          const data = await res.json();
+          if (data.success && Array.isArray(data.data)) {
+            setBlogs(data.data);
+          }
+        } catch (err) {
+          console.error("Error fetching blogs:", err);
+        }
+      };
+      fetchBlogs();
+    }, []);
+  
   return (
     <section className="py-20 bg-gray-50">
       <div className="container mx-auto px-6">
@@ -51,18 +49,18 @@ export default function BlogSection() {
           </div>
 
           <div className="lg:col-span-3 space-y-4">
-            {categories.map((cat, idx) => (
-              <a
-                href={cat.link}
+            {blogs.slice(0,5).map((blog, idx) => (
+              <Link
+                href={'/blog/${blog.slug}'}
                 key={idx}
                 className="group flex flex-col md:flex-row bg-white hover:bg-gray-50 transition-all duration-300 border-l-4 border-gray-300 hover:border-gray-900 shadow-sm hover:shadow-lg"
               >
                 <div className="w-[300px] flex items-center justify-center p-4 relative overflow-hidden">
            
                   <div className="relative w-full h-full transform group-hover:scale-105 transition-transform duration-500">
-                    <Image
-                      src={cat.image}
-                      alt={cat.name}
+                    <img
+                      src={blog.imageUrl}
+                      alt={blog.title}
                       className="w-full h-full"
                     />
                   </div>
@@ -79,7 +77,7 @@ export default function BlogSection() {
                           </span>
                         </div>
                         <h3 className="text-2xl font-bold text-gray-900 mb-2  transition-colors duration-300">
-                          {cat.name}
+                          {blog.title}
                         </h3>
                       </div>
                     </div>
@@ -87,7 +85,7 @@ export default function BlogSection() {
                     <div className="mb-4">
                      
                       <p className="text-sm text-gray-700">
-                        {cat.applications}
+                        {blog.shortDescription}
                       </p>
                     </div>
                   </div>
@@ -101,7 +99,7 @@ export default function BlogSection() {
                     </div>
                   </div>
                 </div>
-              </a>
+              </Link>
             ))}
           </div>
         </div>

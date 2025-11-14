@@ -230,7 +230,7 @@ const ProductsClient = () => {
                   </p>
                   <button
                     onClick={clearFilters}
-                    className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
+                    className="px-6 py-2 bg-gray-900 text-white rounded-lg"
                   >
                     Clear Filters
                   </button>
