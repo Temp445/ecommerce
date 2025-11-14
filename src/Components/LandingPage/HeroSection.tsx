@@ -1,156 +1,66 @@
-"use client";
-import { useState, useEffect } from "react";
-import { ChevronLeft, ChevronRight, Zap } from "lucide-react";
 import Link from "next/link";
+import { ArrowRight } from "lucide-react";
+import Image from "next/image";
+import product from "@/assets/product.png";
 
 const HeroSection = () => {
-  const [currentSlide, setCurrentSlide] = useState(0);
-
-  const slides = [
-    {
-      id: 1,
-      image:
-        "https://res.cloudinary.com/dvywl117x/image/upload/v1762164778/ecom_products/thumbnails/double_acting_hydraulic%20-%20Copy.png",
-    },
-    {
-      id: 2,
-      image:
-        "https://res.cloudinary.com/dvywl117x/image/upload/v1762164778/ecom_products/thumbnails/double_acting_hydraulic%20-%20Copy.png",
-    },
-    {
-      id: 3,
-      image:
-        "https://res.cloudinary.com/dvywl117x/image/upload/v1762164778/ecom_products/thumbnails/double_acting_hydraulic%20-%20Copy.png",
-    },
-  ];
-
-  const extendedSlides = [...slides, ...slides, ...slides];
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentSlide((prev) => prev + 1);
-    }, 5000);
-    return () => clearInterval(timer);
-  }, []);
-
-  useEffect(() => {
-    if (currentSlide >= slides.length * 2) {
-      setCurrentSlide(slides.length);
-    }
-  }, [currentSlide, slides.length]);
-
-  const nextSlide = () => {
-    setCurrentSlide((prev) => prev + 1);
-  };
-
-  const prevSlide = () => {
-    setCurrentSlide((prev) => (prev - 1 >= 0 ? prev - 1 : slides.length - 1));
-  };
-
-  const goToSlide = (index: number) => {
-    setCurrentSlide(slides.length + index);
-  };
-
   return (
-    <div className="min-h-fit bg-white overflow-hidden container mx-auto">
-      <div className="relative h-fit flex flex-col md:flex-row items-center overflow-hidden">
-        <div className=" md:w-1/2 flex flex-col justify-between p-4 xl:p-6 2xl:p-14 order-2 md:order-1">
-          <div className="mb-10 md:mb-20 mt-5 md:mt-10">
-            <h1 className=" text-3xl md:text-4xl xl:text-6xl 2xl:text-7xl mb-2 text-gray-900  leading-tight transition-all duration-500">
-              High-Pressure
-            </h1>
-            <h2 className="text-gray-500 mb-8 text-3xl md:text-4xl xl:text-6xl 2xl:7xl ">
-              Hydraulic Solutions
-            </h2>
+    <div className="overflow-hidden">
+      <div className="container mx-auto h-full">
+        <div className="relative  flex flex-col md:flex-row items-center justify-between gap-8 lg:gap-12 px-4 md:px-8 lg:px-12">
+          <div className="w-full md:w-1/2 flex flex-col justify-center py-12 md:py-14 order-2 md:order-1 z-10">
+            <div className="mb-6 md:mb-10">
+              <div className="flex items-center gap-3 mb-8">
+                <div className="w-12 h-1 bg-gradient-to-r from-gray-900 to-gray-600"></div>
+                <span className="text-xs font-semibold text-gray-600 tracking-widest uppercase">
+                  Premium Solutions
+                </span>
+              </div>
 
-            <p className="text-gray-600  font-light leading-relaxed text-sm transition-all duration-500">
-              Built for strength and durability, our cylinders deliver reliable
-              performance across industrial and heavy-duty applications.{" "}
-            </p>
-          </div>
+              <h1 className="text-5xl md:text-6xl lg:text-7xl font-semibold text-gray-900 leading-tight mb-4 tracking-tight">
+                High-Pressure
+              </h1>
+              <h2 className="text-4xl md:text-5xl lg:text-6xl font-medium text-gray-500 leading-tight mb-8">
+                Hydraulic Solutions
+              </h2>
 
-          <div className="space-y-8">
-            <button className="group relative inline-block">
-              <Link
-                href="/products"
-                className="text-sm font-semibold text-gray-900 tracking-widest uppercase transition"
-              >
-                Explore Products
+              <p className="text-base md:text-lg text-gray-600 leading-relaxed font-light max-w-lg">
+                Built for strength and durability, our cylinders deliver
+                reliable performance across industrial and heavy-duty
+                applications with precision engineering.
+              </p>
+            </div>
+
+            <div className="flex flex-col sm:flex-row gap-4 mt-10 md:mt-14">
+              <Link href="/products">
+                <button className="group relative px-8 py-4 bg-gray-900 text-white text-sm font-semibold tracking-wide uppercase overflow-hidden transition-all duration-300 hover:shadow-lg">
+                  <span className="relative z-10 flex items-center gap-2">
+                    Explore Products
+                    <ArrowRight className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" />
+                  </span>
+                  <div className="absolute inset-0 bg-gradient-to-r from-gray-800 to-gray-950 transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left z-0"></div>
+                </button>
               </Link>
-              <div className="absolute bottom-0 left-0 w-full h-px bg-gray-900 transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></div>
-            </button>
-
-            <div className="flex gap-4">
-              {slides.map((_, idx) => (
-                <button
-                  key={idx}
-                  onClick={() => goToSlide(idx)}
-                  className={`transition-all duration-300 ${
-                    currentSlide % slides.length === idx
-                      ? "w-12 h-1 bg-gray-900"
-                      : "w-4 h-1 bg-gray-300 hover:bg-gray-500"
-                  }`}
-                />
-              ))}
             </div>
           </div>
-        </div>
 
-        <div className=" order-1 md:w-1/2 relative overflow-hidden bg-white">
-          <div
-            className="flex transition-transform duration-700 ease-out h-full w-full"
-            style={{ transform: `translateX(-${currentSlide * 100}%)` }}
-          >
-            {extendedSlides.map((item, idx) => (
-              <div
-                key={idx}
-                className="w-full h-full flex-shrink-0 relative flex items-center justify-center"
-              >
-                <img
-                  src={item.image}
+          <div className=" order-1 md:w-1/2 relative">
+            <div className="flex h-full w-full">
+              <div className="w-full h-full flex-shrink-0 relative flex items-center justify-center">
+                <Image
+                  src={product}
                   alt="Hydraulic Cylinder"
-                  className="w-full h-80 md:h-96 object-contain"
+                  width={200}
+                  height={200}
+                  className="w-full  object-contain"
                 />
               </div>
-            ))}
-          </div>
-
-          <button
-            onClick={prevSlide}
-            className="absolute left-12 top-1/2 -translate-y-1/2 CartProduct group"
-          >
-            <div className="w-14 h-14 hidden border border-gray-300 rounded-full md:flex items-center justify-center group-hover:border-gray-900 group-hover:bg-white transition">
-              <ChevronLeft
-                size={24}
-                className="text-gray-600 group-hover:text-gray-900 transition"
-              />
-            </div>
-          </button>
-
-          <button
-            onClick={nextSlide}
-            className="absolute right-12 top-1/2 -translate-y-1/2 CartProduct group"
-          >
-            <div className="w-14 h-14 border border-gray-300 rounded-full hidden  md:flex items-center justify-center group-hover:border-gray-900 group-hover:bg-white transition">
-              <ChevronRight
-                size={24}
-                className="text-gray-600 group-hover:text-gray-900 transition"
-              />
-            </div>
-          </button>
-
-          <div className="absolute bottom-12 left-12 ">
-            <div className=" hidden nd:flex items-center gap-3 bg-white px-6 py-4 rounded-full shadow-lg">
-              <Zap size={18} className="text-gray-900" />
-              <span className="text-sm font-medium text-gray-900">
-                Heavy Duty Grade
-              </span>
             </div>
           </div>
         </div>
       </div>
     </div>
   );
-}
+};
 
 export default HeroSection;

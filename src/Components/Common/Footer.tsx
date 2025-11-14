@@ -7,11 +7,9 @@ import { Facebook, Twitter, Linkedin, Mail, Phone, MapPin, } from "lucide-react"
 
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { useRouter } from "next/navigation";
 
 export default function Footer() {
     const [categories, setCategories] = useState<any[]>([]);
-      const router = useRouter();
     
       const fetchCategories = async () => {
         try {
@@ -27,11 +25,10 @@ export default function Footer() {
         fetchCategories();
       }, []);
   return (
-    <footer className="bg-gradient-to-b from-gray-950 to-black text-gray-300">
+    <footer className="bg-gray-900 text-gray-300">
       
-
-      <div className="max-w-7xl mx-auto px-6 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
+      <div className="max-w-7xl mx-auto px-6 py-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
           
           <div className="lg:col-span-1">
             <div className="flex items-center gap-3 mb-4">
@@ -108,26 +105,9 @@ export default function Footer() {
 
         </div>
 
-        <div className="mb-12">
-          <h3 className="text-white font-medium mb-4 text-lg flex items-center gap-2">
-            <span className="w-1 h-6 bg-white rounded"></span>
-            Find Us
-          </h3>
-          <div className="rounded-xl overflow-hidden h-64 shadow-2xl border border-gray-800 hover:border-blue-500 transition duration-300">
-            <iframe 
-              src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d31098.12104086999!2d80.206727!3d13.018781!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a52669470c1b127%3A0xe3512b101f4ee3ad!2sACE%20Software%20Solutions%20Pvt%20Ltd!5e0!3m2!1sen!2sin!4v1763098771577!5m2!1sen!2sin" 
-              width="100%" 
-              height="100%" 
-              style={{ border: 0 }}
-              loading="lazy" 
-              referrerPolicy="no-referrer-when-downgrade"
-            ></iframe>
-          </div>
-        </div>
 
         <div className="border-gray-800 pt-8">
           
-
           <div className="text-center text-xs text-gray-600 border-t border-gray-800 pt-6">
             <p>© 2025 ACE HYDRAULIC. All rights reserved. | Engineered for Power </p>
           </div>

@@ -49,21 +49,21 @@ const OrderDetailPage = () => {
     fetchData();
   }, [orderId, itemId]);
 
-  const handleStatusUpdate = async (status: string) => {
-    try {
-      setUpdating(true);
-      await axios.patch(`/api/orders/${orderId}/items/${itemId}`, {
-        orderStatus: status,
-      });
-      toast.success(`Status updated to ${status}`);
-      router.refresh();
-    } catch (error) {
-      console.error("Error updating item:", error);
-      toast.error("Failed to update status");
-    } finally {
-      setUpdating(false);
-    }
-  };
+  // const handleStatusUpdate = async (status: string) => {
+  //   try {
+  //     setUpdating(true);
+  //     await axios.patch(`/api/orders/${orderId}/items/${itemId}`, {
+  //       orderStatus: status,
+  //     });
+  //     toast.success(`Status updated to ${status}`);
+  //     router.refresh();
+  //   } catch (error) {
+  //     console.error("Error updating item:", error);
+  //     toast.error("Failed to update status");
+  //   } finally {
+  //     setUpdating(false);
+  //   }
+  // };
 
   const handleCancelItem = async () => {
     if (!cancelReason.trim()) {
@@ -165,7 +165,6 @@ const OrderDetailPage = () => {
     return (
       <div className="flex flex-col items-center justify-center min-h-screen bg-gray-50">
         <div className="text-center">
-          <div className="text-6xl mb-4">📦</div>
           <h2 className="text-2xl font-bold text-gray-800 mb-2">
             Order Not Found
           </h2>
@@ -188,7 +187,7 @@ const OrderDetailPage = () => {
       : "Payment Failed";
 
   const isDisabled =
-    item.orderStatus === "Delivered" || item.orderStatus === "Cancelled";
+   item.orderStatus === "Shipped" || item.orderStatus === "Delivered" || item.orderStatus === "Cancelled";
 
   return (
     <div className="min-h-screen bg-gray-100">
@@ -232,7 +231,7 @@ const OrderDetailPage = () => {
 
                 const progress =
                   item.orderStatus === "Cancelled"
-                    ? 0.28
+                    ? 0.26
                     : currentIndex >= 0
                     ? currentIndex / totalStages
                     : 0;
@@ -421,7 +420,7 @@ const OrderDetailPage = () => {
                 Cancel Item
               </button>
 
-              <button
+              {/* <button
                 disabled={updating || isDisabled}
                 onClick={() => handleStatusUpdate("Return Requested")}
                 className={`px-4 py-2 rounded-lg text-sm font-medium transition ${
@@ -431,7 +430,7 @@ const OrderDetailPage = () => {
                 }`}
               >
                 Request Return
-              </button>
+              </button> */}
             </div>
 
             {updating && (
@@ -443,7 +442,7 @@ const OrderDetailPage = () => {
         </div>
       </div>
       {showCancel && (
-        <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
+        <div className="fixed inset-0 bg-black/80  flex items-center justify-center z-50">
           <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-md">
             <h2 className="text-lg font-semibold mb-3 text-gray-900">
               Cancel Product
