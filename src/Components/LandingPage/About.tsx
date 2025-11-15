@@ -19,9 +19,9 @@ const About = () => {
       <div className="relative container mx-auto px-6 md:px-12 lg:px-20 flex flex-col md:items-start items-center text-left max-w-4xl">
         <div className="w-24 h-1 bg-yellow-500 mb-6 md:mb-8"></div>
 
-        <h2 className="text-2xl md:text-6xl font-extrabold leading-tight mb-6 drop-shadow-lg">
+        <h2 className="text-2xl md:text-5xl xl:text-6xl font-extrabold leading-tight mb-6 drop-shadow-lg">
           Driving Industry Forward with
-          <br  className='hidden md:block'/> <span className="text-yellow-500">Hydraulic Excellence</span>
+          <br  className='hidden lg:block'/> <span className="text-yellow-500">Hydraulic Excellence</span>
         </h2>
 
         <p className="text-gray-300  md:text-xl leading-relaxed mb-10 max-w-2xl">

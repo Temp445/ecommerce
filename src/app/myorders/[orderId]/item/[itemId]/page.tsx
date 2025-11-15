@@ -187,7 +187,7 @@ const OrderDetailPage = () => {
       : "Payment Failed";
 
   const isDisabled =
-   item.orderStatus === "Shipped" || item.orderStatus === "Delivered" || item.orderStatus === "Cancelled";
+   item.orderStatus === "Shipped" || item.orderStatus === "Out for Delivery" || item.orderStatus === "Delivered" || item.orderStatus === "Cancelled";
 
   return (
     <div className="min-h-screen bg-gray-100">

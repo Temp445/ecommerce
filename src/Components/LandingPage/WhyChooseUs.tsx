@@ -31,12 +31,12 @@ export default function FeaturesSection() {
   ];
 
   return (
-    <div className="w-full py-5 md:py-12 2xl:py-5 px-2 md:px-4">
+    <div className="w-full py-5 px-2 md:px-4">
       <div className="container mx-auto">
         <div className="bg-white rounded-lg  py-10 md:px-4 ">
           <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-5 md:gap-10 ">
             {features.map((feature, index) => (
-              <div key={index} className="flex flex-col items-center md:ml-2 gap-2 md:gap-5">
+              <div key={index} className="flex flex-col items-center xl:ml-2 gap-2 md:gap-5">
                 <div className="flex-shrink-0 bg-gray-100 p-2 rounded-full">
                   <div className="w-14 h-14 rounded-full flex items-center p-1 justify-center">
                     {feature.icon && <feature.icon className="w-10 h-10 text-gray-800" />}

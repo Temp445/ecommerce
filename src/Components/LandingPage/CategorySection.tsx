@@ -29,14 +29,14 @@ const CategorySection = () => {
     <section className=" py-5 md:py-20 bg-gray-900">
       <div className="container mx-auto px-4 2xl:px-8">
         <div className=" mb-5 md:mb-16">
-          <h2 className="text-2xl md:text-4xl font-light text-white mb-2">
+          <h2 className="text-2xl md:text-3xl lg:text-4xl font-light text-white mb-2">
             Shop by Category
           </h2>
           <div className="w-12 h-1 bg-white mt-4"></div>
         </div>
 
         {!loading && categories.length > 0 && (
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 md:gap-6">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 md:gap-6">
             {categories.slice(0, 5).map((cat) => (
               <button
                 key={cat._id}

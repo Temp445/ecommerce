@@ -13,7 +13,7 @@ const Offer = () => {
       />
 
       <div className="relative z-10 max-w-3xl mx-auto">
-        <h2 className=" text-lg md:text-4xl  mb-4 leading-tight">
+        <h2 className=" text-lg md:text-3xl xl:text-4xl  mb-4 leading-tight">
           Save <span className="text-yellow-300">15%</span> on Bulk Orders
         </h2>
         <p className="text-sm md:text-lg text-blue-100 mb-8">
